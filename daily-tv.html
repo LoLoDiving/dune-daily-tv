@@ -6,14 +6,13 @@
 <title>DAILY PACKAGES – TV</title>
 
 <style>
-/* 🔥 ON GARDE EXACTEMENT TON CSS */
 html, body{
   height:100%;
   margin:0;
   overflow:hidden;
 }
 body{
-  font-family: system-ui;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background:#f4f6f8;
   color:#111;
 }
@@ -21,9 +20,7 @@ body{
   height:100vh;
 }
 
-/* (je ne recolle pas tout ton CSS ici pour lisibilité)
-👉 GARDE TON CSS COMPLET EXACTEMENT COMME TU L’AS
-*/
+/* 🔥 TON CSS COMPLET ICI (NE RIEN MODIFIER) */
 </style>
 </head>
 
@@ -48,7 +45,7 @@ let reqSeq = 0;
 const SLOT_ORDER = ["MORNING-1","MORNING-2","AFTERNOON"];
 
 /* =========================
-   HELPERS (identiques)
+   HELPERS
 ========================= */
 function toISO(d){ return d.toISOString().slice(0,10); }
 
@@ -62,12 +59,13 @@ function formatDate(d){
 }
 
 /* =========================
-   FETCH DATA
+   FETCH DATA (REMPLACE GAS)
 ========================= */
 async function fetchDaily(dateISO){
-
   try{
-    const res = await fetch(API + "?page=DATA_DAILY_PACKAGES&date=" + dateISO + "&t=" + Date.now());
+    const res = await fetch(
+      API + "?page=DATA_DAILY_PACKAGES&date=" + dateISO + "&t=" + Date.now()
+    );
     const txt = await res.text();
     return JSON.parse(txt);
   }catch(e){
@@ -77,7 +75,7 @@ async function fetchDaily(dateISO){
 }
 
 /* =========================
-   LOAD (REMPLACE google.script.run)
+   LOAD DESKTOP (IDENTIQUE)
 ========================= */
 async function loadDesktopDay(){
 
@@ -110,7 +108,7 @@ async function loadDesktopDay(){
 }
 
 /* =========================
-   RENDER (IDENTIQUE)
+   RENDER DESKTOP (FULL)
 ========================= */
 function renderDesktop(dataJ, dataJ1){
 
@@ -139,26 +137,65 @@ function renderDesktop(dataJ, dataJ1){
 }
 
 /* =========================
-   SLOT RENDER
+   WRAPPER (IMPORTANT)
 ========================= */
-function renderInto(contentId,totalId,data){
+function renderInto(contentId, totalId, data) {
 
   const targetContent = document.getElementById(contentId);
   const targetTotal   = document.getElementById(totalId);
 
+  const originalGet = document.getElementById;
+
+  document.getElementById = function(id) {
+    if (id === "content") return targetContent;
+    if (id === "totalLabel") return targetTotal;
+    return originalGet.call(document, id);
+  };
+
+  render(data);
+
+  document.getElementById = originalGet;
+}
+
+/* =========================
+   🔥 TON RENDER ORIGINAL (SIMPLIFIÉ MIN)
+========================= */
+function render(data){
+
+  const content = document.getElementById("content");
+  const total   = document.getElementById("totalLabel");
+
   let html = "";
+  let totalPax = 0;
 
   SLOT_ORDER.forEach(slot => {
 
-    if(!data.slots?.[slot]) return;
+    if (!data.slots?.[slot]) return;
 
-    html += `<div class="slot-header"><strong>${slot}</strong></div>`;
-    html += `<div class="slot-content">`;
+    let paxCount = 0;
 
-    data.slots[slot].forEach(act=>{
-      act.sites.forEach(site=>{
-        site.guides.forEach(g=>{
-          g.pax.forEach(p=>{
+    data.slots[slot].forEach(act => {
+      act.sites.forEach(site => {
+        site.guides.forEach(g => {
+          paxCount += g.pax.length;
+        });
+      });
+    });
+
+    totalPax += paxCount;
+
+    html += `
+      <div class="slot-header">
+        <strong>${slot}</strong> — ${paxCount} pax
+      </div>
+      <div class="slot-content">
+    `;
+
+    data.slots[slot].forEach(act => {
+      act.sites.forEach(site => {
+        site.guides.forEach(g => {
+
+          g.pax.forEach(p => {
             html += `
               <div class="pax">
                 <div class="pax-name">${p.firstName} ${p.lastName}</div>
@@ -166,6 +203,7 @@ function renderInto(contentId,totalId,data){
               </div>
             `;
           });
+
         });
       });
     });
@@ -173,14 +211,18 @@ function renderInto(contentId,totalId,data){
     html += `</div>`;
   });
 
-  targetContent.innerHTML = html;
+  content.innerHTML = html;
+
+  if(total){
+    total.innerHTML = `<strong>${totalPax} Pax</strong>`;
+  }
 }
 
 /* =========================
    AUTO REFRESH
 ========================= */
 setInterval(loadDesktopDay, 60000);
-setInterval(()=>location.reload(), 600000);
+setInterval(()=>location.reload(), 1000*60*10);
 
 /* INIT */
 loadDesktopDay();
