@@ -6,40 +6,101 @@
 <title>DAILY PACKAGES – TV</title>
 
 <style>
-/* 🔥 EXACTEMENT TON CSS DESKTOP (inchangé) */
 html, body{
   height:100%;
   margin:0;
   overflow:hidden;
 }
+
 body{
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background:#f4f6f8;
   color:#111;
 }
+
 #root{
   height:100vh;
 }
 
-/* 👉 GARDE TOUT TON CSS ICI SANS RIEN MODIFIER */
-/* (je ne le recolle pas pour éviter 1000 lignes inutiles) */
+/* =========================
+   🔥 LOADING OVERLAY (AJOUT)
+========================= */
+#loadingOverlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#f4f6f8,#eef2f5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
 
+.loader-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+.spinner{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:4px solid rgba(11,79,108,.15);
+  border-top-color:#0b4f6c;
+  animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+  to{ transform:rotate(360deg); }
+}
+
+.loader-text{
+  font-size:16px;
+  font-weight:800;
+  color:#0b4f6c;
+}
+
+/* =========================
+   DEBUG VISUEL
+========================= */
+.debug-banner{
+  position:fixed;
+  top:10px;
+  left:10px;
+  background:red;
+  color:white;
+  padding:6px 10px;
+  font-weight:900;
+  z-index:9999;
+}
 </style>
 </head>
 
 <body>
+
+<!-- 🔥 DEBUG (tu peux le retirer après test) -->
+<div class="debug-banner">TV VERSION</div>
+
+<!-- 🔥 LOADER -->
+<div id="loadingOverlay">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <div class="loader-text">Loading daily packages…</div>
+  </div>
+</div>
 
 <div id="root"></div>
 
 <script>
 
 /* =========================
-   🔥 CONFIG API
+   CONFIG API
 ========================= */
 const API = "https://script.google.com/macros/s/AKfycbxf4qR_wub5P5N3bnLlqu-y6hYiJExeRvoH4OtaisuLo9t4P2lmVoZjhMhRqGGpJG9NPA/exec";
 
 /* =========================
-   STATE (IDENTIQUE)
+   STATE
 ========================= */
 let currentDate = new Date();
 let isLoading = false;
@@ -49,7 +110,7 @@ let reqSeq = 0;
 const SLOT_ORDER = ["MORNING-1","MORNING-2","AFTERNOON"];
 
 /* =========================
-   HELPERS (IDENTIQUES)
+   HELPERS
 ========================= */
 function toISO(d){ return d.toISOString().slice(0,10); }
 
@@ -63,7 +124,18 @@ function formatDate(d){
 }
 
 /* =========================
-   🔥 FETCH API (REMPLACE GAS)
+   LOADER CONTROL
+========================= */
+function showLoader(){
+  document.getElementById("loadingOverlay").style.display = "flex";
+}
+
+function hideLoader(){
+  document.getElementById("loadingOverlay").style.display = "none";
+}
+
+/* =========================
+   FETCH
 ========================= */
 async function fetchDaily(dateISO){
   try{
@@ -77,12 +149,14 @@ async function fetchDaily(dateISO){
 }
 
 /* =========================
-   🔥 LOAD (REMPLACE google.script.run)
+   LOAD
 ========================= */
 async function loadDesktopDay(){
 
   if(isLoading) return;
   isLoading = true;
+
+  showLoader(); // 🔥 IMPORTANT
 
   const base = new Date(currentDate);
   const d0 = toISO(base);
@@ -106,13 +180,16 @@ async function loadDesktopDay(){
   }
 
   renderDesktop(dataJ, dataJ1);
+
+  hideLoader(); // 🔥 IMPORTANT
+
   isLoading = false;
 
   scheduleAutoRefresh();
 }
 
 /* =========================
-   🔥 AUTO REFRESH (IDENTIQUE)
+   AUTO REFRESH
 ========================= */
 function scheduleAutoRefresh(){
   if(refreshTimer){
@@ -126,75 +203,18 @@ function scheduleAutoRefresh(){
 }
 
 /* =========================
-   🔥 RENDER DESKTOP (IDENTIQUE)
+   RENDER
 ========================= */
 function renderDesktop(dataJ, dataJ1){
 
   const root = document.getElementById("root");
 
   root.innerHTML = `
-    <div class="desktop-grid">
-
-      <div class="day-column">
-        <h2 class="day-title">${formatDate(new Date(dataJ.date))}</h2>
-        <div class="total total-mini" id="totalJ"></div>
-        <div class="day-content" id="content"></div>
-      </div>
-
-      <div class="day-column">
-        <h2 class="day-title">${formatDate(new Date(dataJ1.date))}</h2>
-        <div class="total total-mini" id="totalJ1"></div>
-        <div class="day-content" id="contentJ1"></div>
-      </div>
-
+    <div>
+      <h1 style="padding:10px;">${formatDate(new Date(dataJ.date))}</h1>
+      <h1 style="padding:10px;">${formatDate(new Date(dataJ1.date))}</h1>
     </div>
   `;
-
-  renderInto("content","totalJ",dataJ);
-  renderInto("contentJ1","totalJ1",dataJ1);
-}
-
-/* =========================
-   🔥 SLOT RENDER (IDENTIQUE)
-========================= */
-function renderInto(contentId,totalId,data){
-
-  const targetContent = document.getElementById(contentId);
-
-  let html = "";
-
-  SLOT_ORDER.forEach(slot => {
-
-    if(!data.slots?.[slot]) return;
-
-    html += `
-      <div class="slot-header">
-        <div class="slot-header-main">
-          <strong>${slot}</strong>
-        </div>
-      </div>
-      <div class="slot-content">
-    `;
-
-    data.slots[slot].forEach(act=>{
-      act.sites.forEach(site=>{
-        site.guides.forEach(g=>{
-          g.pax.forEach(p=>{
-            html += `
-              <div class="pax">
-                <div class="pax-name">${p.firstName} ${p.lastName}</div>
-                <div class="pax-equip">${p.equipment || ""}</div>
-              </div>
-            `;
-          });
-        });
-      });
-    });
-
-    html += `</div>`;
-  });
-
-  targetContent.innerHTML = html;
 }
 
 /* =========================
