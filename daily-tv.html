@@ -22,33 +22,86 @@ body{
   height:100vh;
 }
 
-/* =========================
-   🔥 LOADING OVERLAY (AJOUT)
-========================= */
+/* GRID */
+.desktop-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+  padding:8px;
+  height:100%;
+  box-sizing:border-box;
+}
+
+.day-column{
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+
+.day-title{
+  margin:0;
+  padding:8px 10px;
+  font-size:20px;
+  font-weight:900;
+  color:#0b4f6c;
+}
+
+.day-content{
+  padding:6px;
+  overflow:auto;
+}
+
+/* SLOT */
+.slot-header{
+  background:#0b4f6c;
+  color:#fff;
+  padding:6px 8px;
+  margin-top:6px;
+  border-radius:8px;
+  font-weight:900;
+}
+
+.slot-content{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-top:4px;
+}
+
+/* PAX */
+.pax{
+  padding:4px 6px;
+  background:#fff;
+  border-radius:6px;
+}
+
+.pax-name{
+  font-weight:800;
+}
+
+.pax-equip{
+  font-size:12px;
+  opacity:.7;
+}
+
+/* LOADER */
 #loadingOverlay{
   position:fixed;
   inset:0;
-  background:linear-gradient(180deg,#f4f6f8,#eef2f5);
+  background:#f4f6f8;
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:9999;
 }
 
-.loader-box{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-
 .spinner{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  border:4px solid rgba(11,79,108,.15);
+  width:40px;
+  height:40px;
+  border:4px solid rgba(0,0,0,.1);
   border-top-color:#0b4f6c;
-  animation:spin 0.8s linear infinite;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
 }
 
 @keyframes spin{
@@ -56,20 +109,17 @@ body{
 }
 
 .loader-text{
-  font-size:16px;
+  margin-top:10px;
   font-weight:800;
-  color:#0b4f6c;
 }
 
-/* =========================
-   DEBUG VISUEL
-========================= */
-.debug-banner{
+/* DEBUG */
+.debug{
   position:fixed;
   top:10px;
   left:10px;
   background:red;
-  color:white;
+  color:#fff;
   padding:6px 10px;
   font-weight:900;
   z-index:9999;
@@ -79,12 +129,10 @@ body{
 
 <body>
 
-<!-- 🔥 DEBUG (tu peux le retirer après test) -->
-<div class="debug-banner">TV VERSION</div>
+<div class="debug">TV VERSION</div>
 
-<!-- 🔥 LOADER -->
 <div id="loadingOverlay">
-  <div class="loader-box">
+  <div>
     <div class="spinner"></div>
     <div class="loader-text">Loading daily packages…</div>
   </div>
@@ -104,15 +152,13 @@ const API = "https://script.google.com/macros/s/AKfycbxf4qR_wub5P5N3bnLlqu-y6hYi
 ========================= */
 let currentDate = new Date();
 let isLoading = false;
-let refreshTimer = null;
-let reqSeq = 0;
-
-const SLOT_ORDER = ["MORNING-1","MORNING-2","AFTERNOON"];
 
 /* =========================
    HELPERS
 ========================= */
-function toISO(d){ return d.toISOString().slice(0,10); }
+function toISO(d){
+  return d.toISOString().slice(0,10);
+}
 
 function formatDate(d){
   return d.toLocaleDateString("en-GB",{
@@ -124,26 +170,14 @@ function formatDate(d){
 }
 
 /* =========================
-   LOADER CONTROL
-========================= */
-function showLoader(){
-  document.getElementById("loadingOverlay").style.display = "flex";
-}
-
-function hideLoader(){
-  document.getElementById("loadingOverlay").style.display = "none";
-}
-
-/* =========================
    FETCH
 ========================= */
 async function fetchDaily(dateISO){
   try{
     const res = await fetch(API + "?page=DATA_DAILY_PACKAGES&date=" + dateISO + "&t=" + Date.now());
-    const txt = await res.text();
-    return JSON.parse(txt);
+    return await res.json();
   }catch(e){
-    console.error("FETCH ERROR", e);
+    console.error(e);
     return null;
   }
 }
@@ -151,76 +185,105 @@ async function fetchDaily(dateISO){
 /* =========================
    LOAD
 ========================= */
-async function loadDesktopDay(){
+async function load(){
 
   if(isLoading) return;
   isLoading = true;
 
-  showLoader(); // 🔥 IMPORTANT
-
   const base = new Date(currentDate);
+
   const d0 = toISO(base);
 
   const d1Date = new Date(base);
   d1Date.setDate(base.getDate()+1);
   const d1 = toISO(d1Date);
 
-  const mySeq = ++reqSeq;
-
   const [dataJ, dataJ1] = await Promise.all([
     fetchDaily(d0),
     fetchDaily(d1)
   ]);
 
-  if(mySeq !== reqSeq) return;
-
   if(!dataJ || !dataJ1){
-    isLoading = false;
+    console.error("NO DATA");
     return;
   }
 
-  renderDesktop(dataJ, dataJ1);
+  render(dataJ, dataJ1);
 
-  hideLoader(); // 🔥 IMPORTANT
+  document.getElementById("loadingOverlay").style.display = "none";
 
   isLoading = false;
-
-  scheduleAutoRefresh();
-}
-
-/* =========================
-   AUTO REFRESH
-========================= */
-function scheduleAutoRefresh(){
-  if(refreshTimer){
-    clearTimeout(refreshTimer);
-    refreshTimer = null;
-  }
-
-  refreshTimer = setTimeout(()=>{
-    loadDesktopDay();
-  },60000);
 }
 
 /* =========================
    RENDER
 ========================= */
-function renderDesktop(dataJ, dataJ1){
+function render(dataJ, dataJ1){
 
   const root = document.getElementById("root");
 
   root.innerHTML = `
-    <div>
-      <h1 style="padding:10px;">${formatDate(new Date(dataJ.date))}</h1>
-      <h1 style="padding:10px;">${formatDate(new Date(dataJ1.date))}</h1>
+    <div class="desktop-grid">
+
+      <div class="day-column">
+        <h2 class="day-title">${formatDate(new Date(dataJ.date))}</h2>
+        <div id="contentJ"></div>
+      </div>
+
+      <div class="day-column">
+        <h2 class="day-title">${formatDate(new Date(dataJ1.date))}</h2>
+        <div id="contentJ1"></div>
+      </div>
+
     </div>
   `;
+
+  renderDay("contentJ", dataJ);
+  renderDay("contentJ1", dataJ1);
+}
+
+/* =========================
+   RENDER DAY
+========================= */
+function renderDay(id, data){
+
+  const el = document.getElementById(id);
+
+  let html = "";
+
+  ["MORNING-1","MORNING-2","AFTERNOON"].forEach(slot => {
+
+    if(!data.slots?.[slot]) return;
+
+    html += `<div class="slot-header">${slot}</div>`;
+    html += `<div class="slot-content">`;
+
+    data.slots[slot].forEach(act=>{
+      act.sites.forEach(site=>{
+        site.guides.forEach(g=>{
+          g.pax.forEach(p=>{
+            html += `
+              <div class="pax">
+                <div class="pax-name">${p.firstName} ${p.lastName}</div>
+                <div class="pax-equip">${p.equipment || ""}</div>
+              </div>
+            `;
+          });
+        });
+      });
+    });
+
+    html += `</div>`;
+  });
+
+  el.innerHTML = html;
 }
 
 /* =========================
    INIT
 ========================= */
-loadDesktopDay();
+load();
+setInterval(load, 60000);
 setInterval(()=>location.reload(), 1000*60*30);
 
 </script>
