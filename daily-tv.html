@@ -328,6 +328,7 @@ body{
   top: 0;
   left: 0;
 }
+
 </style>
 </head>
 
@@ -842,17 +843,14 @@ function scaleTV() {
   const app = document.getElementById("app");
   if (!app) return;
 
-  // 🔥 TON COEFF PAR TV (tu ajustes ici)
-  const scale = 0.75; // 👈 commence avec ça pour daily
+  // 🔥 AJUSTE ICI
+  const scale = 1.05;
 
   app.style.transform = `scale(${scale})`;
   app.style.transformOrigin = "top left";
 
-  const screenWidth = window.innerWidth;
-  const screenHeight = window.innerHeight;
-
-  const offsetX = (screenWidth - 1920 * scale) / 2;
-  const offsetY = (screenHeight - 1080 * scale) / 2;
+  const offsetX = (window.innerWidth - 1920 * scale) / 2;
+  const offsetY = (window.innerHeight - 1080 * scale) / 2;
 
   app.style.left = offsetX + "px";
   app.style.top = offsetY + "px";
