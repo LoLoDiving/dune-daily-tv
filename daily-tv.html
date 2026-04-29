@@ -341,7 +341,7 @@ body{
 </head>
 
 <body>
-<div class="debug-banner">TV VERSION 0.72 13:13</div>
+<div class="debug-banner">TV VERSION 0.50 13:17</div>
 
 <div id="loadingOverlay">
   <div class="loader-box">
@@ -852,13 +852,13 @@ function scaleTV() {
   if (!app) return;
 
   // 🔥 AJUSTE ICI
-  const scale = 0.72;
+  const scale = 0.50;
 
   app.style.transform = `scale(${scale})`;
   app.style.transformOrigin = "top left";
 
   const offsetX = 0;
-  const offsetY = (window.innerHeight - 1080 * scale) / 2;
+  const offsetY = 0;
 
   app.style.left = offsetX + "px";
   app.style.top = offsetY + "px";
