@@ -320,6 +320,14 @@ body{
   font-weight:900;
   z-index:10000;
 }
+
+#app {
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>
 </head>
 
@@ -337,7 +345,9 @@ body{
   © Design & System — Laurent Sampéré
 </div>
 
-<div id="root"></div>
+<div id="app">
+  <div id="root"></div>
+</div>
 
 <script>
 const API = "https://script.google.com/macros/s/AKfycbxf4qR_wub5P5N3bnLlqu-y6hYiJExeRvoH4OtaisuLo9t4P2lmVoZjhMhRqGGpJG9NPA/exec";
@@ -828,11 +838,37 @@ function hasEquipDiff(pJ, pJ1){
   return normalizeEquip(pJ.equipment) !== normalizeEquip(pJ1.equipment);
 }
 
+function scaleTV() {
+  const app = document.getElementById("app");
+  if (!app) return;
+
+  // 🔥 TON COEFF PAR TV (tu ajustes ici)
+  const scale = 0.75; // 👈 commence avec ça pour daily
+
+  app.style.transform = `scale(${scale})`;
+  app.style.transformOrigin = "top left";
+
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  const offsetX = (screenWidth - 1920 * scale) / 2;
+  const offsetY = (screenHeight - 1080 * scale) / 2;
+
+  app.style.left = offsetX + "px";
+  app.style.top = offsetY + "px";
+}
+
+
 window.addEventListener("load", () => {
-  loadDesktopDay(false);
+  scaleTV();                         // 🔥 applique le scale au démarrage
+  window.addEventListener("resize", scaleTV); // 🔥 si la TV change résolution
 });
 
-setInterval(() => location.reload(), 1000 * 60 * 30);
+// 🔥 TON INIT EXISTANT (tu le gardes)
+loadDesktopDay();
+
+setInterval(()=>location.reload(), 1000*60*30);
+
 </script>
 
 </body>
