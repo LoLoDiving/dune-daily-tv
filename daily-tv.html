@@ -18,11 +18,8 @@ body{
   color:#111;
 }
 
-#root{
-  height:100vh;
-}
+#root{ height:100vh; }
 
-/* GRID */
 .desktop-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -33,6 +30,8 @@ body{
 }
 
 .day-column{
+  background:#f4f6f8;
+  border-radius:14px;
   display:flex;
   flex-direction:column;
   min-height:0;
@@ -40,25 +39,131 @@ body{
 
 .day-title{
   margin:0;
-  padding:8px 10px;
-  font-size:20px;
+  padding:8px 10px 6px;
+  font-size:18px;
   font-weight:900;
   color:#0b4f6c;
+  flex:0 0 auto;
 }
 
 .day-content{
-  padding:6px;
+  padding:0 6px 8px;
   overflow:auto;
+  min-height:0;
 }
 
-/* SLOT */
+.total{
+  background:
+    radial-gradient(700px 220px at 0% 0%, rgba(11,79,108,.18), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
+  border:1px solid rgba(0,58,92,.12);
+  box-shadow:0 8px 18px rgba(0,0,0,.12);
+  border-radius:12px;
+}
+
+.total-mini{
+  margin:0 6px 8px;
+  padding:8px;
+}
+
+.tot-main{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  font-size:20px;
+  font-weight:950;
+  color:#0b4f6c;
+}
+
+.tot-sub{
+  font-size:12px;
+  font-weight:900;
+  color:rgba(0,58,92,.6);
+}
+
+.tot-line{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:6px;
+  padding-top:6px;
+  border-top:1px dashed rgba(0,58,92,.15);
+  font-size:14px;
+  font-weight:900;
+}
+
+.tot-line-right{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:nowrap;
+}
+
+.tot-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:3px 6px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:900;
+  background:rgba(0,58,92,.08);
+  color:#003a5c;
+  border:1px solid rgba(0,58,92,.12);
+  white-space:nowrap;
+}
+
+.tot-badge.afternoon{
+  background:rgba(27,77,62,.1);
+  color:#1b4d3e;
+}
+
 .slot-header{
-  background:#0b4f6c;
+  background:linear-gradient(90deg,#0b4f6c,#0a3f57);
   color:#fff;
   padding:6px 8px;
   margin-top:6px;
-  border-radius:8px;
+  user-select:none;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  border-radius:10px;
+}
+
+.slot-header-main{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14px;
   font-weight:900;
+}
+
+.slot-header-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.slot-header-sub{
+  font-size:11px;
+  font-weight:600;
+  opacity:.8;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.slot-tanks{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(255,255,255,.12);
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:900;
+  white-space:nowrap;
 }
 
 .slot-content{
@@ -68,100 +173,204 @@ body{
   margin-top:4px;
 }
 
-/* PAX */
 .pax{
+  display:flex;
+  flex-direction:column;
   padding:4px 6px;
   background:#fff;
-  border-radius:6px;
+  border-radius:8px;
 }
 
-.pax-name{
-  font-weight:800;
+.pax-name {
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.pax-diff-icon{
+  font-size:13px;
+  opacity:0.45;
+  line-height:1;
 }
 
 .pax-equip{
-  font-size:12px;
-  opacity:.7;
+  display:flex;
+  flex-wrap:nowrap;
+  gap:4px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  white-space:nowrap;
+  padding-bottom:2px;
 }
 
-/* LOADER */
+.equip-row,
+.equip-row.special{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:4px;
+  border:none;
+  padding:0;
+}
+
+.equip-pill{
+  background:#e9f1f7;
+  color:#003a5c;
+  padding:2px 5px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+  line-height:1.15;
+}
+
+.pax-equip::-webkit-scrollbar{ height:4px; }
+.pax-equip::-webkit-scrollbar-thumb{
+  background:rgba(0,58,92,.25);
+  border-radius:4px;
+}
+
+.skeleton{ opacity:.4; }
+
+.skeleton .equip-pill{
+  background:linear-gradient(90deg,#e9f1f7 25%,#f4f8fb 37%,#e9f1f7 63%);
+  background-size:400% 100%;
+  animation:shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer{
+  0%{ background-position:100% 0; }
+  100%{ background-position:0 0; }
+}
+
+.header-signature {
+  position:fixed;
+  top:6px;
+  right:10px;
+  text-align:right;
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:0.4px;
+  color:rgba(0,0,0,1);
+  opacity:0.95;
+  z-index:40;
+  pointer-events:none;
+  user-select:none;
+  white-space:nowrap;
+}
+
+.pax-linked-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
 #loadingOverlay{
   position:fixed;
   inset:0;
-  background:#f4f6f8;
+  background:linear-gradient(180deg,#f4f6f8,#eef2f5);
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:9999;
 }
 
-.spinner{
-  width:40px;
-  height:40px;
-  border:4px solid rgba(0,0,0,.1);
-  border-top-color:#0b4f6c;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
+.loader-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
 }
 
-@keyframes spin{
-  to{ transform:rotate(360deg); }
+.spinner{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:4px solid rgba(11,79,108,.15);
+  border-top-color:#0b4f6c;
+  animation:spin .8s linear infinite;
 }
+
+@keyframes spin{ to{ transform:rotate(360deg); } }
 
 .loader-text{
-  margin-top:10px;
-  font-weight:800;
+  font-size:13px;
+  font-weight:700;
+  color:#0b4f6c;
+  opacity:.8;
 }
 
-/* DEBUG */
-.debug{
+.fade-in{
+  opacity:0;
+  transform:translateY(6px);
+  animation:fadeInUp .35s ease forwards;
+}
+
+@keyframes fadeInUp{
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.debug-banner{
   position:fixed;
-  top:10px;
-  left:10px;
+  top:8px;
+  left:8px;
   background:red;
-  color:#fff;
-  padding:6px 10px;
+  color:white;
+  padding:4px 8px;
+  font-size:11px;
   font-weight:900;
-  z-index:9999;
+  z-index:10000;
 }
 </style>
 </head>
 
 <body>
-
-<div class="debug">TV VERSION</div>
+<div class="debug-banner">TV VERSION</div>
 
 <div id="loadingOverlay">
-  <div>
+  <div class="loader-box">
     <div class="spinner"></div>
     <div class="loader-text">Loading daily packages…</div>
   </div>
 </div>
 
+<div class="header-signature">
+  © Design & System — Laurent Sampéré
+</div>
+
 <div id="root"></div>
 
 <script>
-
-/* =========================
-   CONFIG API
-========================= */
 const API = "https://script.google.com/macros/s/AKfycbxf4qR_wub5P5N3bnLlqu-y6hYiJExeRvoH4OtaisuLo9t4P2lmVoZjhMhRqGGpJG9NPA/exec";
 
-/* =========================
-   STATE
-========================= */
+const equipDiffMap = new Set();
+
 let currentDate = new Date();
 let isLoading = false;
+let refreshTimer = null;
+let reqSeq = 0;
+let lastGoodJ = null;
+let lastGoodJ1 = null;
 
-/* =========================
-   HELPERS
-========================= */
-function toISO(d){
-  return d.toISOString().slice(0,10);
+const SLOT_ORDER = ["MORNING-1", "MORNING-2", "AFTERNOON"];
+
+function showLoader(){
+  const el = document.getElementById("loadingOverlay");
+  if (el) el.style.display = "flex";
 }
 
-function formatDate(d){
-  return d.toLocaleDateString("en-GB",{
+function hideLoader(){
+  const el = document.getElementById("loadingOverlay");
+  if (el) el.style.display = "none";
+}
+
+function toISO(d) {
+  const x = new Date(d);
+  x.setHours(12,0,0,0);
+  return x.toISOString().slice(0,10);
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString("en-GB", {
     weekday:"short",
     day:"2-digit",
     month:"short",
@@ -169,105 +378,190 @@ function formatDate(d){
   });
 }
 
-/* =========================
-   FETCH
-========================= */
 async function fetchDaily(dateISO){
   try{
-    const res = await fetch(API + "?page=DATA_DAILY_PACKAGES&date=" + dateISO + "&t=" + Date.now());
-    return await res.json();
+    const res = await fetch(API + "?page=DATA_DAILY_PACKAGES&date=" + dateISO + "&t=" + Date.now(), {
+      method:"GET",
+      cache:"no-store"
+    });
+    const txt = await res.text();
+    return JSON.parse(txt);
   }catch(e){
-    console.error(e);
+    console.error("FETCH ERROR", e);
     return null;
   }
 }
 
-/* =========================
-   LOAD
-========================= */
-async function load(){
-
-  if(isLoading) return;
-  isLoading = true;
-
-  const base = new Date(currentDate);
-
-  const d0 = toISO(base);
-
-  const d1Date = new Date(base);
-  d1Date.setDate(base.getDate()+1);
-  const d1 = toISO(d1Date);
-
-  const [dataJ, dataJ1] = await Promise.all([
-    fetchDaily(d0),
-    fetchDaily(d1)
-  ]);
-
-  if(!dataJ || !dataJ1){
-    console.error("NO DATA");
-    return;
-  }
-
-  render(dataJ, dataJ1);
-
-  document.getElementById("loadingOverlay").style.display = "none";
-
-  isLoading = false;
+function initTankCounts() {
+  return { "12L":0, "15L":0 };
 }
 
-/* =========================
-   RENDER
-========================= */
-function render(dataJ, dataJ1){
-
-  const root = document.getElementById("root");
-
-  root.innerHTML = `
-    <div class="desktop-grid">
-
-      <div class="day-column">
-        <h2 class="day-title">${formatDate(new Date(dataJ.date))}</h2>
-        <div id="contentJ"></div>
-      </div>
-
-      <div class="day-column">
-        <h2 class="day-title">${formatDate(new Date(dataJ1.date))}</h2>
-        <div id="contentJ1"></div>
-      </div>
-
-    </div>
-  `;
-
-  renderDay("contentJ", dataJ);
-  renderDay("contentJ1", dataJ1);
+function getTankVolume(rawEquip) {
+  const s = String(rawEquip || "");
+  if (s.includes("15L")) return "15L";
+  if (s.includes("12L")) return "12L";
+  return "";
 }
 
-/* =========================
-   RENDER DAY
-========================= */
-function renderDay(id, data){
+function addTank(counts, rawEquip) {
+  const vol = getTankVolume(rawEquip);
+  if (!vol) return;
+  counts[vol] = (counts[vol] || 0) + 1;
+}
 
-  const el = document.getElementById(id);
+function getWeightKg(rawEquip) {
+  if (!rawEquip) return 0;
+  const m = String(rawEquip).match(/⚖️\s*(\d+)\s*kg/i);
+  return m ? parseInt(m[1], 10) : 0;
+}
+
+function renderEquipment(raw) {
+  if (!raw) return "";
+
+  const segments = raw.split("|").map(s => s.trim()).filter(Boolean);
+  const lineCore = [];
+  const lineOther = [];
+  const lineKayak = [];
+
+  segments.forEach(seg => {
+    const low = seg.toLowerCase();
+
+    if (low.includes("🛶")) { lineKayak.push(seg); return; }
+
+    if (
+      low.includes("mask") ||
+      low.includes("regulator") ||
+      low.includes("computer") ||
+      low.includes("lamp") ||
+      low.includes("compass") ||
+      low.includes("dpv")
+    ) { lineOther.push(seg); return; }
+
+    lineCore.push(seg);
+  });
 
   let html = "";
 
-  ["MORNING-1","MORNING-2","AFTERNOON"].forEach(slot => {
+  if (lineCore.length) {
+    html += `<div class="equip-row">${lineCore.map(e => `<span class="equip-pill">${e}</span>`).join("")}</div>`;
+  }
+  if (lineOther.length) {
+    html += `<div class="equip-row special">${lineOther.map(e => `<span class="equip-pill">${e}</span>`).join("")}</div>`;
+  }
+  if (lineKayak.length) {
+    html += `<div class="equip-row special">${lineKayak.map(e => `<span class="equip-pill">${e}</span>`).join("")}</div>`;
+  }
 
-    if(!data.slots?.[slot]) return;
+  return html;
+}
 
-    html += `<div class="slot-header">${slot}</div>`;
-    html += `<div class="slot-content">`;
+function render(data) {
+  const uniquePax = new Set();
 
-    data.slots[slot].forEach(act=>{
-      act.sites.forEach(site=>{
-        site.guides.forEach(g=>{
-          g.pax.forEach(p=>{
-            html += `
-              <div class="pax">
-                <div class="pax-name">${p.firstName} ${p.lastName}</div>
-                <div class="pax-equip">${p.equipment || ""}</div>
-              </div>
-            `;
+  const tanksBySlot = {
+    "MORNING-1": initTankCounts(),
+    "MORNING-2": initTankCounts(),
+    "AFTERNOON": initTankCounts()
+  };
+
+  const morningPaxKg = new Map();
+  let afternoonKg = 0;
+
+  SLOT_ORDER.forEach(slot => {
+    const acts = data.slots?.[slot];
+    if (!acts) return;
+
+    acts.forEach(act => {
+      (act.sites || []).forEach(siteObj => {
+        (siteObj.guides || []).forEach(g => {
+          (g.pax || []).forEach(p => {
+            if (p.paxKey) uniquePax.add(p.paxKey);
+            addTank(tanksBySlot[slot], p.equipment);
+
+            const kg = getWeightKg(p.equipment);
+
+            if (slot === "MORNING-1" || slot === "MORNING-2") {
+              if (p.paxKey && kg > 0 && !morningPaxKg.has(p.paxKey)) {
+                morningPaxKg.set(p.paxKey, kg);
+              }
+            }
+
+            if (slot === "AFTERNOON" && kg > 0) {
+              afternoonKg += kg;
+            }
+          });
+        });
+      });
+    });
+  });
+
+  const tanksMorning = initTankCounts();
+  ["MORNING-1", "MORNING-2"].forEach(s => {
+    tanksMorning["12L"] += tanksBySlot[s]["12L"];
+    tanksMorning["15L"] += tanksBySlot[s]["15L"];
+  });
+
+  const tanksAfternoon = tanksBySlot["AFTERNOON"];
+  const morningKg = [...morningPaxKg.values()].reduce((a,b)=>a+b,0);
+
+  let html = "";
+
+  SLOT_ORDER.forEach(slot => {
+    if (!data.slots?.[slot]) return;
+
+    let paxInSlot = 0;
+    const metaLines = new Set();
+
+    data.slots[slot].forEach(act => {
+      (act.sites || []).forEach(siteObj => {
+        (siteObj.guides || []).forEach(g => {
+          paxInSlot += (g.pax || []).length;
+          metaLines.add(`${g.guide} • ${act.activity} • ${siteObj.site}`);
+        });
+      });
+    });
+
+    const c = tanksBySlot[slot];
+    const slotSummary = `🫧 ${c["12L"]}×12L • ${c["15L"]}×15L`;
+
+    let vehicleHTML = "";
+    const transport = data.transport?.[slot];
+
+    if (transport?.vehicles) {
+      vehicleHTML = Object.values(transport.vehicles).map(v => {
+        let color = "#e8f1f7";
+        if (v.used > v.max) color = "#ff4d4d";
+        else if (v.used === v.max) color = "#ffb703";
+
+        const icon = v.type === "BOAT" ? "🚤" : "🚐";
+        return `<span style="color:${color};font-weight:900;">${icon} ${v.used}/${v.max} ${v.label}</span>`;
+      }).join(" ");
+    }
+
+    html += `
+      <div class="slot-header">
+        <div class="slot-header-main">
+          <div>
+            <strong>▼ ${slot}</strong>
+            ${vehicleHTML ? `<span style="margin-left:10px;">${vehicleHTML}</span>` : ""}
+          </div>
+          <div class="slot-header-right">
+            <span style="font-weight:900;">${paxInSlot} pax</span>
+            <span class="slot-tanks">${slotSummary}</span>
+          </div>
+        </div>
+        <div class="slot-header-sub">${[...metaLines].join(" / ")}</div>
+      </div>
+
+      <div class="slot-content" id="slot_${slot}">
+    `;
+
+    data.slots[slot].forEach(act => {
+      (act.sites || []).forEach(siteObj => {
+        (siteObj.guides || []).forEach(g => {
+          (g.pax || []).forEach(p => {
+            if (data.isJ && p.isLinked) return;
+            html += renderNormalPax(p);
           });
         });
       });
@@ -276,16 +570,269 @@ function renderDay(id, data){
     html += `</div>`;
   });
 
-  el.innerHTML = html;
+  const contentEl = document.getElementById("content");
+  if (contentEl) contentEl.innerHTML = html;
+
+  const totalEl = document.getElementById("totalLabel");
+  if (totalEl) {
+    totalEl.innerHTML = `
+      <div class="tot-main">
+        ${uniquePax.size} Pax
+        <span class="tot-sub">Total / Day</span>
+      </div>
+
+      <div class="tot-line">
+        <div class="tot-line-left"><span class="tot-label morning">MORNING (double tank)</span></div>
+        <div class="tot-line-right">
+          <span class="tot-badge">⚖️ ${morningKg} kg</span>
+          <span class="tot-badge">🫧 ${tanksMorning["12L"]}×12L</span>
+          <span class="tot-badge">🫧 ${tanksMorning["15L"]}×15L</span>
+        </div>
+      </div>
+
+      <div class="tot-line">
+        <div class="tot-line-left"><span class="tot-label afternoon">AFTERNOON</span></div>
+        <div class="tot-line-right">
+          <span class="tot-badge afternoon">⚖️ ${afternoonKg} kg</span>
+          <span class="tot-badge afternoon">🫧 ${tanksAfternoon["12L"]}×12L</span>
+          <span class="tot-badge afternoon">🫧 ${tanksAfternoon["15L"]}×15L</span>
+        </div>
+      </div>
+    `;
+  }
+
+  setTimeout(() => {
+    document.querySelectorAll(".pax-equip.skeleton").forEach(el => {
+      const raw = decodeURIComponent(el.dataset.equip || "");
+      el.innerHTML = renderEquipment(raw);
+      el.classList.remove("skeleton");
+    });
+  }, 40);
 }
 
-/* =========================
-   INIT
-========================= */
-load();
-setInterval(load, 60000);
-setInterval(()=>location.reload(), 1000*60*30);
+function scheduleAutoRefresh() {
+  if (refreshTimer) {
+    clearTimeout(refreshTimer);
+    refreshTimer = null;
+  }
 
+  refreshTimer = setTimeout(() => {
+    loadDesktopDay(true);
+    scheduleAutoRefresh();
+  }, 60000);
+}
+
+async function loadDesktopDay(isAuto = false) {
+  if (isLoading) return;
+  isLoading = true;
+
+  if (!isAuto) showLoader();
+
+  const base = new Date(currentDate);
+  const d0 = toISO(base);
+
+  const d1Date = new Date(base);
+  d1Date.setDate(base.getDate() + 1);
+  const d1 = toISO(d1Date);
+
+  const mySeq = ++reqSeq;
+
+  const [dataJ, dataJ1] = await Promise.all([
+    fetchDaily(d0),
+    fetchDaily(d1)
+  ]);
+
+  if (mySeq !== reqSeq) return;
+
+  if (!dataJ || !dataJ1) {
+    console.warn("TV load incomplete", dataJ, dataJ1);
+
+    if (lastGoodJ && lastGoodJ1) {
+      renderDesktop(lastGoodJ, lastGoodJ1);
+      hideLoader();
+    }
+
+    isLoading = false;
+    return;
+  }
+
+  lastGoodJ = dataJ;
+  lastGoodJ1 = dataJ1;
+
+  renderDesktop(dataJ, dataJ1);
+  isLoading = false;
+
+  if (!isAuto) hideLoader();
+
+  scheduleAutoRefresh();
+}
+
+function renderDesktop(dataJ, dataJ1) {
+  const root = document.getElementById("root");
+
+  root.innerHTML = `
+    <div class="desktop-grid fade-in">
+      <div class="day-column">
+        <h2 class="day-title">${formatDate(new Date(dataJ.date))}</h2>
+        <div class="total total-mini" id="totalJ"></div>
+        <div class="day-content" id="content"></div>
+      </div>
+
+      <div class="day-column">
+        <h2 class="day-title">${formatDate(new Date(dataJ1.date))}</h2>
+        <div class="total total-mini" id="totalJ1"></div>
+        <div class="day-content" id="contentJ1"></div>
+      </div>
+    </div>
+  `;
+
+  const paxMapJ  = new Map();
+  const paxMapJ1 = new Map();
+
+  collectPax(dataJ, paxMapJ);
+  collectPax(dataJ1, paxMapJ1);
+
+  const linkedKeys = new Set([...paxMapJ.keys()].filter(k => paxMapJ1.has(k)));
+
+  equipDiffMap.clear();
+
+  linkedKeys.forEach(k => {
+    const pJ  = paxMapJ.get(k);
+    const pJ1 = paxMapJ1.get(k);
+
+    if (pJ && pJ1 && hasEquipDiff(pJ, pJ1)) {
+      equipDiffMap.add(k);
+    }
+  });
+
+  markLinkedPax(dataJ, linkedKeys);
+  markLinkedPax(dataJ1, linkedKeys);
+
+  dataJ.isJ = true;
+  dataJ1.isJ = false;
+
+  renderInto("content", "totalJ", dataJ);
+  renderInto("contentJ1", "totalJ1", dataJ1);
+
+  const aligned = renderAlignedPax(dataJ, dataJ1);
+  const j1 = document.getElementById("contentJ1");
+  if (j1) j1.insertAdjacentHTML("beforeend", aligned.htmlJ1);
+}
+
+function collectPax(data, map){
+  SLOT_ORDER.forEach(slot => {
+    (data.slots?.[slot] || []).forEach(act => {
+      (act.sites || []).forEach(siteObj => {
+        (siteObj.guides || []).forEach(g => {
+          (g.pax || []).forEach(p => {
+            if (p.paxKey) map.set(p.paxKey, p);
+          });
+        });
+      });
+    });
+  });
+}
+
+function markLinkedPax(data, linkedKeys){
+  SLOT_ORDER.forEach(slot => {
+    (data.slots?.[slot] || []).forEach(act => {
+      (act.sites || []).forEach(siteObj => {
+        (siteObj.guides || []).forEach(g => {
+          (g.pax || []).forEach(p => {
+            p.isLinked = linkedKeys.has(p.paxKey);
+          });
+        });
+      });
+    });
+  });
+}
+
+function renderInto(contentId, totalId, data) {
+  const targetContent = document.getElementById(contentId);
+  const targetTotal = document.getElementById(totalId);
+  if (!targetContent || !targetTotal) return;
+
+  const originalGet = document.getElementById;
+
+  document.getElementById = function(id) {
+    if (id === "content") return targetContent;
+    if (id === "totalLabel") return targetTotal;
+    return originalGet.call(document, id);
+  };
+
+  render(data);
+
+  document.getElementById = originalGet;
+}
+
+function renderNormalPax(p) {
+  const showDiff = equipDiffMap.has(p.paxKey) && !p.isJ;
+
+  const diffIcon = showDiff
+    ? `<span class="pax-diff-icon" title="Equipment changed">🔁</span>`
+    : "";
+
+  return `
+    <div class="pax pax-box">
+      <div class="pax-name">
+        ${p.firstName || ""} ${p.lastName || ""}
+        ${diffIcon}
+      </div>
+
+      <div class="pax-equip skeleton"
+           data-equip="${encodeURIComponent(p.equipment || "")}">
+        <span class="equip-pill">&nbsp;</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderLinkedRow(pJ, pJ1){
+  return `
+    <div class="pax-linked-row">
+      <div>${renderNormalPax(pJ)}</div>
+      <div>${renderNormalPax(pJ1)}</div>
+    </div>
+  `;
+}
+
+function renderAlignedPax(dataJ, dataJ1) {
+  const mapJ  = new Map();
+  const mapJ1 = new Map();
+
+  collectPax(dataJ, mapJ);
+  collectPax(dataJ1, mapJ1);
+
+  const linkedKeys = [...mapJ.keys()].filter(k => mapJ1.has(k));
+
+  let htmlJ1 = "";
+
+  linkedKeys.forEach(k => {
+    const pJ  = mapJ.get(k);
+    const pJ1 = mapJ1.get(k);
+
+    htmlJ1 += renderLinkedRow(pJ, pJ1);
+  });
+
+  return { htmlJ1 };
+}
+
+function normalizeEquip(raw){
+  return String(raw || "")
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/[|]/g, "");
+}
+
+function hasEquipDiff(pJ, pJ1){
+  return normalizeEquip(pJ.equipment) !== normalizeEquip(pJ1.equipment);
+}
+
+window.addEventListener("load", () => {
+  loadDesktopDay(false);
+});
+
+setInterval(() => location.reload(), 1000 * 60 * 30);
 </script>
 
 </body>
