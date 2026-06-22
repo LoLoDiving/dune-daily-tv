@@ -358,7 +358,12 @@ let reqSeq = 0;
 let lastGoodJ = null;
 let lastGoodJ1 = null;
 
-const SLOT_ORDER = ["MORNING-1", "MORNING-2", "AFTERNOON"];
+const SLOT_ORDER = ["MORNING", "AFTERNOON"];
+
+const SLOT_GROUPS = {
+  "MORNING": ["MORNING-1", "MORNING-2"],
+  "AFTERNOON": ["AFTERNOON"]
+};
 
 function showLoader(){
   const el = document.getElementById("loadingOverlay");
@@ -465,91 +470,103 @@ function renderEquipment(raw) {
 function render(data) {
   const uniquePax = new Set();
 
-  const tanksBySlot = {
-    "MORNING-1": initTankCounts(),
-    "MORNING-2": initTankCounts(),
+  const tanksByDisplaySlot = {
+    "MORNING": initTankCounts(),
     "AFTERNOON": initTankCounts()
   };
 
   const morningPaxKg = new Map();
   let afternoonKg = 0;
 
-  SLOT_ORDER.forEach(slot => {
-    const acts = data.slots?.[slot];
-    if (!acts) return;
+  SLOT_ORDER.forEach(displaySlot => {
+    const realSlots = SLOT_GROUPS[displaySlot] || [displaySlot];
 
-    acts.forEach(act => {
-      (act.sites || []).forEach(siteObj => {
-        (siteObj.guides || []).forEach(g => {
-          (g.pax || []).forEach(p => {
-            if (p.paxKey) uniquePax.add(p.paxKey);
-            addTank(tanksBySlot[slot], p.equipment);
+    realSlots.forEach(realSlot => {
+      const acts = data.slots?.[realSlot];
+      if (!acts) return;
 
-            const kg = getWeightKg(p.equipment);
+      acts.forEach(act => {
+        (act.sites || []).forEach(siteObj => {
+          (siteObj.guides || []).forEach(g => {
+            (g.pax || []).forEach(p => {
+              if (p.paxKey) uniquePax.add(p.paxKey);
 
-            if (slot === "MORNING-1" || slot === "MORNING-2") {
-              if (p.paxKey && kg > 0 && !morningPaxKg.has(p.paxKey)) {
-                morningPaxKg.set(p.paxKey, kg);
+              addTank(tanksByDisplaySlot[displaySlot], p.equipment);
+
+              const kg = getWeightKg(p.equipment);
+
+              if (displaySlot === "MORNING") {
+                if (p.paxKey && kg > 0 && !morningPaxKg.has(p.paxKey)) {
+                  morningPaxKg.set(p.paxKey, kg);
+                }
               }
-            }
 
-            if (slot === "AFTERNOON" && kg > 0) {
-              afternoonKg += kg;
-            }
+              if (displaySlot === "AFTERNOON" && kg > 0) {
+                afternoonKg += kg;
+              }
+            });
           });
         });
       });
     });
   });
 
-  const tanksMorning = initTankCounts();
-  ["MORNING-1", "MORNING-2"].forEach(s => {
-    tanksMorning["12L"] += tanksBySlot[s]["12L"];
-    tanksMorning["15L"] += tanksBySlot[s]["15L"];
-  });
-
-  const tanksAfternoon = tanksBySlot["AFTERNOON"];
+  const tanksMorning = tanksByDisplaySlot["MORNING"];
+  const tanksAfternoon = tanksByDisplaySlot["AFTERNOON"];
   const morningKg = [...morningPaxKg.values()].reduce((a,b)=>a+b,0);
 
   let html = "";
 
-  SLOT_ORDER.forEach(slot => {
-    if (!data.slots?.[slot]) return;
+  SLOT_ORDER.forEach(displaySlot => {
+    const realSlots = SLOT_GROUPS[displaySlot] || [displaySlot];
 
+    let hasData = false;
     let paxInSlot = 0;
     const metaLines = new Set();
 
-    data.slots[slot].forEach(act => {
-      (act.sites || []).forEach(siteObj => {
-        (siteObj.guides || []).forEach(g => {
-          paxInSlot += (g.pax || []).length;
-          metaLines.add(`${g.guide} • ${act.activity} • ${siteObj.site}`);
+    realSlots.forEach(realSlot => {
+      const acts = data.slots?.[realSlot];
+      if (!acts) return;
+
+      hasData = true;
+
+      acts.forEach(act => {
+        (act.sites || []).forEach(siteObj => {
+          (siteObj.guides || []).forEach(g => {
+            paxInSlot += (g.pax || []).length;
+            metaLines.add(`${g.guide} • ${act.activity} • ${siteObj.site}`);
+          });
         });
       });
     });
 
-    const c = tanksBySlot[slot];
+    if (!hasData) return;
+
+    const c = tanksByDisplaySlot[displaySlot];
     const slotSummary = `🫧 ${c["12L"]}×12L • ${c["15L"]}×15L`;
 
     let vehicleHTML = "";
-    const transport = data.transport?.[slot];
 
-    if (transport?.vehicles) {
-      vehicleHTML = Object.values(transport.vehicles).map(v => {
-        let color = "#e8f1f7";
-        if (v.used > v.max) color = "#ff4d4d";
-        else if (v.used === v.max) color = "#ffb703";
+    realSlots.forEach(realSlot => {
+      const transport = data.transport?.[realSlot];
 
-        const icon = v.type === "BOAT" ? "🚤" : "🚐";
-        return `<span style="color:${color};font-weight:900;">${icon} ${v.used}/${v.max} ${v.label}</span>`;
-      }).join(" ");
-    }
+      if (transport?.vehicles) {
+        vehicleHTML += Object.values(transport.vehicles).map(v => {
+          let color = "#e8f1f7";
+          if (v.used > v.max) color = "#ff4d4d";
+          else if (v.used === v.max) color = "#ffb703";
+
+          const icon = v.type === "BOAT" ? "🚤" : "🚐";
+          return `<span style="color:${color};font-weight:900;">${icon} ${v.used}/${v.max} ${v.label}</span>`;
+        }).join(" ");
+      }
+    });
 
     html += `
       <div class="slot-header">
         <div class="slot-header-main">
           <div>
-            <strong>▼ ${slot}</strong>
+            <strong>▼ ${displaySlot}</strong>
             ${vehicleHTML ? `<span style="margin-left:10px;">${vehicleHTML}</span>` : ""}
           </div>
           <div class="slot-header-right">
@@ -560,15 +577,20 @@ function render(data) {
         <div class="slot-header-sub">${[...metaLines].join(" / ")}</div>
       </div>
 
-      <div class="slot-content" id="slot_${slot}">
+      <div class="slot-content" id="slot_${displaySlot}">
     `;
 
-    data.slots[slot].forEach(act => {
-      (act.sites || []).forEach(siteObj => {
-        (siteObj.guides || []).forEach(g => {
-          (g.pax || []).forEach(p => {
-            if (data.isJ && p.isLinked) return;
-            html += renderNormalPax(p);
+    realSlots.forEach(realSlot => {
+      const acts = data.slots?.[realSlot];
+      if (!acts) return;
+
+      acts.forEach(act => {
+        (act.sites || []).forEach(siteObj => {
+          (siteObj.guides || []).forEach(g => {
+            (g.pax || []).forEach(p => {
+              if (data.isJ && p.isLinked) return;
+              html += renderNormalPax(p);
+            });
           });
         });
       });
@@ -589,7 +611,7 @@ function render(data) {
       </div>
 
       <div class="tot-line">
-        <div class="tot-line-left"><span class="tot-label morning">MORNING (double tank)</span></div>
+        <div class="tot-line-left"><span class="tot-label morning">MORNING</span></div>
         <div class="tot-line-right">
           <span class="tot-badge">⚖️ ${morningKg} kg</span>
           <span class="tot-badge">🫧 ${tanksMorning["12L"]}×12L</span>
@@ -616,7 +638,6 @@ function render(data) {
     });
   }, 40);
 }
-
 function scheduleAutoRefresh() {
   if (refreshTimer) {
     clearTimeout(refreshTimer);
@@ -727,12 +748,16 @@ function renderDesktop(dataJ, dataJ1) {
 }
 
 function collectPax(data, map){
-  SLOT_ORDER.forEach(slot => {
-    (data.slots?.[slot] || []).forEach(act => {
-      (act.sites || []).forEach(siteObj => {
-        (siteObj.guides || []).forEach(g => {
-          (g.pax || []).forEach(p => {
-            if (p.paxKey) map.set(p.paxKey, p);
+  Object.keys(SLOT_GROUPS).forEach(displaySlot => {
+    const realSlots = SLOT_GROUPS[displaySlot] || [displaySlot];
+
+    realSlots.forEach(realSlot => {
+      (data.slots?.[realSlot] || []).forEach(act => {
+        (act.sites || []).forEach(siteObj => {
+          (siteObj.guides || []).forEach(g => {
+            (g.pax || []).forEach(p => {
+              if (p.paxKey) map.set(p.paxKey, p);
+            });
           });
         });
       });
@@ -741,18 +766,23 @@ function collectPax(data, map){
 }
 
 function markLinkedPax(data, linkedKeys){
-  SLOT_ORDER.forEach(slot => {
-    (data.slots?.[slot] || []).forEach(act => {
-      (act.sites || []).forEach(siteObj => {
-        (siteObj.guides || []).forEach(g => {
-          (g.pax || []).forEach(p => {
-            p.isLinked = linkedKeys.has(p.paxKey);
+  Object.keys(SLOT_GROUPS).forEach(displaySlot => {
+    const realSlots = SLOT_GROUPS[displaySlot] || [displaySlot];
+
+    realSlots.forEach(realSlot => {
+      (data.slots?.[realSlot] || []).forEach(act => {
+        (act.sites || []).forEach(siteObj => {
+          (siteObj.guides || []).forEach(g => {
+            (g.pax || []).forEach(p => {
+              p.isLinked = linkedKeys.has(p.paxKey);
+            });
           });
         });
       });
     });
   });
 }
+
 
 function renderInto(contentId, totalId, data) {
   const targetContent = document.getElementById(contentId);
