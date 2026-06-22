@@ -23,13 +23,17 @@ body{
 }
 
 .desktop-grid{
+  height:100%;
+  overflow:hidden;
+}
+
+.desktop-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
-  gap:10px;
-  padding:10px 12px;
+  gap:12px;
+  padding:8px;
   height:100%;
   box-sizing:border-box;
-  overflow:hidden;
 }
 
 .day-column{
@@ -38,118 +42,100 @@ body{
   display:flex;
   flex-direction:column;
   min-height:0;
-  position:relative;
 }
 
 .day-title{
   margin:0;
-  padding:5px 10px 6px;
+  padding:8px 10px 6px;
   font-size:18px;
-  font-weight:950;
+  font-weight:900;
   color:#0b4f6c;
   flex:0 0 auto;
 }
 
 .day-content{
-  padding:0 4px 6px;
+  padding:0 6px 8px;
   overflow:hidden;
   min-height:0;
-  flex:1 1 auto;
 }
 
 .total{
   background:
-    radial-gradient(700px 220px at 0% 0%, rgba(11,79,108,.13), transparent 55%),
+    radial-gradient(700px 220px at 0% 0%, rgba(11,79,108,.18), transparent 55%),
     linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
   border:1px solid rgba(0,58,92,.12);
-  box-shadow:0 5px 12px rgba(0,0,0,.10);
+  box-shadow:0 8px 18px rgba(0,0,0,.12);
   border-radius:12px;
 }
 
 .total-mini{
-  margin:0 4px 10px;
-  padding:10px 14px;
-  display:grid;
-  grid-template-columns:150px 1fr;
-  gap:16px;
-  align-items:center;
-  flex:0 0 auto;
-}
-
-.total-left{
-  border-right:1px solid rgba(0,58,92,.18);
-  padding-right:14px;
-}
-
-.tot-title{
-  font-size:13px;
-  font-weight:950;
-  color:#003a5c;
-  margin-bottom:5px;
-  letter-spacing:.2px;
+  margin:0 6px 8px;
+  padding:8px;
 }
 
 .tot-main{
-  display:block;
-  font-size:32px;
-  line-height:1;
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  font-size:20px;
   font-weight:950;
-  color:#003a5c;
+  color:#0b4f6c;
 }
 
-.total-right{
-  display:grid;
-  grid-template-rows:auto auto;
-  gap:7px;
+.tot-sub{
+  font-size:12px;
+  font-weight:900;
+  color:rgba(0,58,92,.6);
 }
 
 .tot-line{
-  display:grid;
-  grid-template-columns:120px 90px 110px 110px;
+  display:flex;
   align-items:center;
-  gap:10px;
-  margin:0;
-  padding:0 0 7px;
-  border-top:none;
-  border-bottom:1px solid rgba(0,58,92,.12);
+  justify-content:space-between;
+  gap:8px;
+  margin-top:6px;
+  padding-top:6px;
+  border-top:1px dashed rgba(0,58,92,.15);
   font-size:14px;
-  font-weight:950;
-  color:#003a5c;
+  font-weight:900;
 }
 
-.tot-line:last-child{
-  border-bottom:none;
-  padding-bottom:0;
+.tot-line-right{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:nowrap;
 }
 
 .tot-badge{
   display:inline-flex;
   align-items:center;
-  gap:3px;
-  background:transparent;
-  border:none;
-  padding:0;
-  font-size:14px;
-  font-weight:950;
+  gap:4px;
+  padding:3px 6px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:900;
+  background:rgba(0,58,92,.08);
   color:#003a5c;
+  border:1px solid rgba(0,58,92,.12);
   white-space:nowrap;
 }
 
-.tot-badge.afternoon,
-.tot-line .afternoon{
+.tot-badge.afternoon{
+  background:rgba(27,77,62,.1);
   color:#1b4d3e;
 }
 
 .slot-header{
   background:linear-gradient(90deg,#0b4f6c,#0a3f57);
   color:#fff;
-  padding:6px 10px;
-  margin-top:5px;
+  padding:6px 8px;
+  margin-top:6px;
   user-select:none;
   display:flex;
   flex-direction:column;
-  gap:0;
-  border-radius:10px 10px 0 0;
+  gap:2px;
+  border-radius:10px;
 }
 
 .slot-header-main{
@@ -157,28 +143,22 @@ body{
   justify-content:space-between;
   align-items:center;
   font-size:14px;
-  font-weight:950;
-  line-height:1.1;
-}
-
-.slot-header-main > div:first-child{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
-  overflow:hidden;
-  white-space:nowrap;
+  font-weight:900;
 }
 
 .slot-header-right{
   display:flex;
   align-items:center;
   gap:8px;
-  flex:0 0 auto;
 }
 
 .slot-header-sub{
-  display:none;
+  font-size:11px;
+  font-weight:600;
+  opacity:.8;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .slot-tanks{
@@ -186,55 +166,36 @@ body{
   align-items:center;
   gap:6px;
   background:rgba(255,255,255,.12);
-  padding:1px 7px;
+  padding:2px 8px;
   border-radius:999px;
   font-size:13px;
-  font-weight:950;
+  font-weight:900;
   white-space:nowrap;
 }
 
 .slot-content{
   display:flex;
   flex-direction:column;
-  gap:0;
-  margin-top:0;
-  border:1px solid rgba(0,58,92,.12);
-  border-top:none;
-  border-radius:0 0 10px 10px;
-  overflow:hidden;
-  background:#fff;
+  gap:4px;
+  margin-top:4px;
 }
 
 .pax{
+  display:flex;
+  flex-direction:column;
+  padding:4px 6px;
   background:#fff;
-  border-radius:0;
-  padding:2px 8px;
-  display:grid;
-  grid-template-columns:165px 1fr;
-  align-items:center;
-  min-height:24px;
-  border-bottom:1px solid rgba(0,58,92,.08);
-}
-
-.pax:last-child{
-  border-bottom:none;
+  border-radius:8px;
 }
 
 .pax-name {
   display:flex;
   align-items:center;
-  gap:5px;
-  font-size:13px;
-  line-height:1.05;
-  font-weight:850;
-  color:#0b2f45;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  gap:6px;
 }
 
 .pax-diff-icon{
-  font-size:12px;
+  font-size:13px;
   opacity:0.45;
   line-height:1;
 }
@@ -242,63 +203,37 @@ body{
 .pax-equip{
   display:flex;
   flex-wrap:nowrap;
-  gap:8px;
-  overflow:hidden;
+  gap:4px;
+  overflow-x:auto;
+  overflow-y:hidden;
   white-space:nowrap;
-  padding-bottom:0;
-  align-items:center;
+  padding-bottom:2px;
 }
 
 .equip-row,
 .equip-row.special{
   display:flex;
   flex-wrap:nowrap;
-  gap:7px;
+  gap:4px;
   border:none;
   padding:0;
-  min-width:0;
 }
 
 .equip-pill{
-  background:transparent;
+  background:#e9f1f7;
   color:#003a5c;
-  padding:0;
-  border-radius:0;
+  padding:2px 5px;
+  border-radius:6px;
   font-size:11px;
-  font-weight:850;
+  font-weight:800;
   white-space:nowrap;
-  line-height:1.05;
+  line-height:1.15;
 }
 
-.empty-day{
-  height:100%;
-  min-height:520px;
-  border:1px solid rgba(0,58,92,.12);
-  border-radius:12px;
-  background:rgba(255,255,255,.35);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  color:#0b4f6c;
-  font-weight:950;
-  text-align:center;
-}
-
-.empty-icon{
-  font-size:42px;
-  margin-bottom:18px;
-}
-
-.empty-title{
-  font-size:24px;
-}
-
-.empty-sub{
-  font-size:19px;
-  font-style:italic;
-  font-weight:700;
-  margin-top:6px;
+.pax-equip::-webkit-scrollbar{ height:4px; }
+.pax-equip::-webkit-scrollbar-thumb{
+  background:rgba(0,58,92,.25);
+  border-radius:4px;
 }
 
 .skeleton{ opacity:.4; }
@@ -381,6 +316,7 @@ body{
   to{ opacity:1; transform:translateY(0); }
 }
 
+
 #app {
   width: 1920px;
   height: 1080px;
@@ -402,9 +338,9 @@ body{
 </div>
 
 <div id="app">
-  <div class="header-signature">
-    © Design & System — Laurent Sampéré - const scale = 0.50;
 
+<div class="header-signature">
+    © Design & System — Laurent Sampéré
   </div>
 
   <div id="root"></div>
@@ -669,21 +605,23 @@ function render(data) {
   const totalEl = document.getElementById("totalLabel");
   if (totalEl) {
     totalEl.innerHTML = `
-      <div class="total-left">
-        <div class="tot-title">TOTAL / DAY</div>
-        <div class="tot-main">${uniquePax.size} Pax</div>
+      <div class="tot-main">
+        ${uniquePax.size} Pax
+        <span class="tot-sub">Total / Day</span>
       </div>
 
-      <div class="total-right">
-        <div class="tot-line">
-          <div>MORNING</div>
+      <div class="tot-line">
+        <div class="tot-line-left"><span class="tot-label morning">MORNING</span></div>
+        <div class="tot-line-right">
           <span class="tot-badge">⚖️ ${morningKg} kg</span>
           <span class="tot-badge">🫧 ${tanksMorning["12L"]}×12L</span>
           <span class="tot-badge">🫧 ${tanksMorning["15L"]}×15L</span>
         </div>
+      </div>
 
-        <div class="tot-line">
-          <div class="afternoon">AFTERNOON</div>
+      <div class="tot-line">
+        <div class="tot-line-left"><span class="tot-label afternoon">AFTERNOON</span></div>
+        <div class="tot-line-right">
           <span class="tot-badge afternoon">⚖️ ${afternoonKg} kg</span>
           <span class="tot-badge afternoon">🫧 ${tanksAfternoon["12L"]}×12L</span>
           <span class="tot-badge afternoon">🫧 ${tanksAfternoon["15L"]}×15L</span>
@@ -700,36 +638,6 @@ function render(data) {
     });
   }, 40);
 }
-
-function hasAnyPax(data) {
-  let count = 0;
-
-  Object.values(SLOT_GROUPS).flat().forEach(slot => {
-    (data.slots?.[slot] || []).forEach(act => {
-      (act.sites || []).forEach(siteObj => {
-        (siteObj.guides || []).forEach(g => {
-          count += (g.pax || []).length;
-        });
-      });
-    });
-  });
-
-  return count > 0;
-}
-
-function renderEmptyDay(contentId) {
-  const el = document.getElementById(contentId);
-  if (!el) return;
-
-  el.innerHTML = `
-    <div class="empty-day">
-      <div class="empty-icon">🗓️</div>
-      <div class="empty-title">NO ACTIVITIES PLANNED</div>
-      <div class="empty-sub">Enjoy the day!</div>
-    </div>
-  `;
-}
-
 function scheduleAutoRefresh() {
   if (refreshTimer) {
     clearTimeout(refreshTimer);
@@ -833,18 +741,6 @@ function renderDesktop(dataJ, dataJ1) {
 
   renderInto("content", "totalJ", dataJ);
   renderInto("contentJ1", "totalJ1", dataJ1);
-
-  if (!hasAnyPax(dataJ)) {
-    renderEmptyDay("content");
-  }
-
-  if (!hasAnyPax(dataJ1)) {
-    renderEmptyDay("contentJ1");
-  }
-
-  const aligned = renderAlignedPax(dataJ, dataJ1);
-  const j1 = document.getElementById("contentJ1");
-  if (j1) j1.insertAdjacentHTML("beforeend", aligned.htmlJ1);
 }
 
 function collectPax(data, map){
@@ -882,6 +778,7 @@ function markLinkedPax(data, linkedKeys){
     });
   });
 }
+
 
 function renderInto(contentId, totalId, data) {
   const targetContent = document.getElementById(contentId);
@@ -968,24 +865,27 @@ function scaleTV() {
   const app = document.getElementById("app");
   if (!app) return;
 
-  const scale = 0.50;
+  const scale = 0.68;
 
   app.style.transform = `scale(${scale})`;
   app.style.transformOrigin = "top left";
 
   const scaledWidth = 1920 * scale;
-  const offsetX = 0;
-  const offsetY = 8;
+  const scaledHeight = 1080 * scale;
+
+  const offsetX = Math.max(0, (window.innerWidth - scaledWidth) / 2);
+  const offsetY = 10;
 
   app.style.left = offsetX + "px";
   app.style.top = offsetY + "px";
 }
 
 window.addEventListener("load", () => {
-  scaleTV();
-  window.addEventListener("resize", scaleTV);
+  scaleTV();                         // 🔥 applique le scale au démarrage
+  window.addEventListener("resize", scaleTV); // 🔥 si la TV change résolution
 });
 
+// 🔥 TON INIT EXISTANT (tu le gardes)
 loadDesktopDay();
 
 setInterval(()=>location.reload(), 1000*60*30);
