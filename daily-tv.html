@@ -866,7 +866,6 @@ function hasEquipDiff(pJ, pJ1){
 }
 
 function scaleTV() {
-
   const app = document.getElementById("app");
   if (!app) return;
 
@@ -875,7 +874,10 @@ function scaleTV() {
   app.style.transform = `scale(${scale})`;
   app.style.transformOrigin = "top left";
 
-  const offsetX = 0;
+  const scaledWidth = 1920 * scale;
+  const scaledHeight = 1080 * scale;
+
+  const offsetX = Math.max(0, (window.innerWidth - scaledWidth) / 2);
   const offsetY = 10;
 
   app.style.left = offsetX + "px";
