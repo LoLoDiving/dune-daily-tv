@@ -5,26 +5,13 @@
 <meta name="viewport" content="width=1920, initial-scale=1" />
 <title>DAILY PACKAGES – TV</title>
 <style>
-html, body{
-  height:100%;
-  margin:0;
-  overflow:hidden;
-}
-
-body{
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background:#f4f6f8;
-  color:#111;
-}
-
-#root{
-  width:100%;
-  height:100%;
-}
+html, body{height:100%;margin:0;overflow:hidden;}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#f4f6f8;color:#111;}
+#root{width:100%;height:100%;}
 
 .desktop-grid{
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:1fr 1fr;
   gap:10px;
   padding:10px 12px;
   height:100%;
@@ -47,7 +34,6 @@ body{
   font-size:18px;
   font-weight:950;
   color:#0b4f6c;
-  flex:0 0 auto;
 }
 
 .day-content{
@@ -60,7 +46,7 @@ body{
 .total{
   background:
     radial-gradient(700px 220px at 0% 0%, rgba(11,79,108,.13), transparent 55%),
-    linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
+    linear-gradient(180deg,#fff 0%,#f6f9fc 100%);
   border:1px solid rgba(0,58,92,.12);
   box-shadow:0 5px 12px rgba(0,0,0,.10);
   border-radius:12px;
@@ -73,7 +59,6 @@ body{
   grid-template-columns:150px 1fr;
   gap:16px;
   align-items:center;
-  flex:0 0 auto;
 }
 
 .total-left{
@@ -86,7 +71,6 @@ body{
   font-weight:950;
   color:#003a5c;
   margin-bottom:5px;
-  letter-spacing:.2px;
 }
 
 .tot-main{
@@ -97,58 +81,41 @@ body{
   color:#003a5c;
 }
 
-.total-right{
-  display:grid;
-  grid-template-rows:auto auto;
-  gap:7px;
-}
+.total-right{display:grid;gap:7px;}
 
 .tot-line{
   display:grid;
   grid-template-columns:120px 90px 110px 110px;
   align-items:center;
   gap:10px;
-  margin:0;
   padding:0 0 7px;
-  border-top:none;
   border-bottom:1px solid rgba(0,58,92,.12);
   font-size:14px;
   font-weight:950;
   color:#003a5c;
 }
 
-.tot-line:last-child{
-  border-bottom:none;
-  padding-bottom:0;
-}
+.tot-line:last-child{border-bottom:none;padding-bottom:0;}
 
 .tot-badge{
   display:inline-flex;
   align-items:center;
   gap:3px;
-  background:transparent;
-  border:none;
-  padding:0;
   font-size:14px;
   font-weight:950;
   color:#003a5c;
   white-space:nowrap;
 }
 
-.tot-badge.afternoon,
-.tot-line .afternoon{
-  color:#1b4d3e;
-}
+.tot-badge.afternoon,.tot-line .afternoon{color:#1b4d3e;}
 
 .slot-header{
   background:linear-gradient(90deg,#0b4f6c,#0a3f57);
   color:#fff;
   padding:6px 10px;
   margin-top:5px;
-  user-select:none;
   display:flex;
   flex-direction:column;
-  gap:0;
   border-radius:10px 10px 0 0;
 }
 
@@ -177,9 +144,7 @@ body{
   flex:0 0 auto;
 }
 
-.slot-header-sub{
-  display:none;
-}
+.slot-header-sub{display:none;}
 
 .slot-tanks{
   display:inline-flex;
@@ -208,36 +173,30 @@ body{
 .pax{
   background:#fff;
   border-radius:0;
-  padding:2px 8px;
+  padding:4px 8px;
   display:grid;
-  grid-template-columns:165px 1fr;
+  grid-template-columns:190px 1fr;
   align-items:center;
-  min-height:24px;
+  min-height:30px;
   border-bottom:1px solid rgba(0,58,92,.08);
 }
 
-.pax:last-child{
-  border-bottom:none;
-}
+.pax:last-child{border-bottom:none;}
 
-.pax-name {
+.pax-name{
   display:flex;
   align-items:center;
   gap:5px;
-  font-size:13px;
-  line-height:1.05;
-  font-weight:850;
+  font-size:16px;
+  line-height:1.1;
+  font-weight:900;
   color:#0b2f45;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
-.pax-diff-icon{
-  font-size:12px;
-  opacity:0.45;
-  line-height:1;
-}
+.pax-diff-icon{font-size:12px;opacity:.45;line-height:1;}
 
 .pax-equip{
   display:flex;
@@ -249,8 +208,7 @@ body{
   align-items:center;
 }
 
-.equip-row,
-.equip-row.special{
+.equip-row,.equip-row.special{
   display:flex;
   flex-wrap:nowrap;
   gap:7px;
@@ -263,11 +221,10 @@ body{
   background:transparent;
   color:#003a5c;
   padding:0;
-  border-radius:0;
-  font-size:11px;
-  font-weight:850;
+  font-size:13px;
+  font-weight:900;
   white-space:nowrap;
-  line-height:1.05;
+  line-height:1.1;
 }
 
 .empty-day{
@@ -285,55 +242,33 @@ body{
   text-align:center;
 }
 
-.empty-icon{
-  font-size:42px;
-  margin-bottom:18px;
-}
+.empty-icon{font-size:42px;margin-bottom:18px;}
+.empty-title{font-size:24px;}
+.empty-sub{font-size:19px;font-style:italic;font-weight:700;margin-top:6px;}
 
-.empty-title{
-  font-size:24px;
-}
-
-.empty-sub{
-  font-size:19px;
-  font-style:italic;
-  font-weight:700;
-  margin-top:6px;
-}
-
-.skeleton{ opacity:.4; }
-
+.skeleton{opacity:.4;}
 .skeleton .equip-pill{
   background:linear-gradient(90deg,#e9f1f7 25%,#f4f8fb 37%,#e9f1f7 63%);
   background-size:400% 100%;
   animation:shimmer 1.4s ease infinite;
 }
 
-@keyframes shimmer{
-  0%{ background-position:100% 0; }
-  100%{ background-position:0 0; }
-}
+@keyframes shimmer{0%{background-position:100% 0;}100%{background-position:0 0;}}
 
-.header-signature {
+.header-signature{
   position:absolute;
   top:10px;
   right:12px;
   text-align:right;
   font-size:11px;
   font-weight:600;
-  letter-spacing:0.4px;
+  letter-spacing:.4px;
   color:rgba(0,0,0,1);
-  opacity:0.95;
+  opacity:.95;
   z-index:40;
   pointer-events:none;
   user-select:none;
   white-space:nowrap;
-}
-
-.pax-linked-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
 }
 
 #loadingOverlay{
@@ -346,13 +281,7 @@ body{
   z-index:9999;
 }
 
-.loader-box{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-
+.loader-box{display:flex;flex-direction:column;align-items:center;gap:12px;}
 .spinner{
   width:42px;
   height:42px;
@@ -361,34 +290,23 @@ body{
   border-top-color:#0b4f6c;
   animation:spin .8s linear infinite;
 }
-
-@keyframes spin{ to{ transform:rotate(360deg); } }
-
-.loader-text{
-  font-size:13px;
-  font-weight:700;
-  color:#0b4f6c;
-  opacity:.8;
-}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loader-text{font-size:13px;font-weight:700;color:#0b4f6c;opacity:.8;}
 
 .fade-in{
   opacity:0;
   transform:translateY(6px);
   animation:fadeInUp .35s ease forwards;
 }
+@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
 
-@keyframes fadeInUp{
-  to{ opacity:1; transform:translateY(0); }
+#app{
+  width:1920px;
+  height:1080px;
+  position:absolute;
+  top:0;
+  left:0;
 }
-
-#app {
-  width: 1920px;
-  height: 1080px;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 </style>
 </head>
 
@@ -402,11 +320,7 @@ body{
 </div>
 
 <div id="app">
-  <div class="header-signature">
-    © Design & System — Laurent Sampéré - const scale = 0.50;
-
-  </div>
-
+  <div class="header-signature">© Design & System — Laurent Sampéré</div>
   <div id="root"></div>
 </div>
 
@@ -439,13 +353,13 @@ function hideLoader(){
   if (el) el.style.display = "none";
 }
 
-function toISO(d) {
+function toISO(d){
   const x = new Date(d);
   x.setHours(12,0,0,0);
   return x.toISOString().slice(0,10);
 }
 
-function formatDate(d) {
+function formatDate(d){
   return d.toLocaleDateString("en-GB", {
     weekday:"short",
     day:"2-digit",
@@ -468,30 +382,30 @@ async function fetchDaily(dateISO){
   }
 }
 
-function initTankCounts() {
-  return { "12L":0, "15L":0 };
+function initTankCounts(){
+  return {"12L":0,"15L":0};
 }
 
-function getTankVolume(rawEquip) {
+function getTankVolume(rawEquip){
   const s = String(rawEquip || "");
   if (s.includes("15L")) return "15L";
   if (s.includes("12L")) return "12L";
   return "";
 }
 
-function addTank(counts, rawEquip) {
+function addTank(counts, rawEquip){
   const vol = getTankVolume(rawEquip);
   if (!vol) return;
   counts[vol] = (counts[vol] || 0) + 1;
 }
 
-function getWeightKg(rawEquip) {
+function getWeightKg(rawEquip){
   if (!rawEquip) return 0;
   const m = String(rawEquip).match(/⚖️\s*(\d+)\s*kg/i);
-  return m ? parseInt(m[1], 10) : 0;
+  return m ? parseInt(m[1],10) : 0;
 }
 
-function renderEquipment(raw) {
+function renderEquipment(raw){
   if (!raw) return "";
 
   const segments = raw.split("|").map(s => s.trim()).filter(Boolean);
@@ -502,7 +416,10 @@ function renderEquipment(raw) {
   segments.forEach(seg => {
     const low = seg.toLowerCase();
 
-    if (low.includes("🛶")) { lineKayak.push(seg); return; }
+    if (low.includes("🛶")) {
+      lineKayak.push(seg);
+      return;
+    }
 
     if (
       low.includes("mask") ||
@@ -511,7 +428,10 @@ function renderEquipment(raw) {
       low.includes("lamp") ||
       low.includes("compass") ||
       low.includes("dpv")
-    ) { lineOther.push(seg); return; }
+    ){
+      lineOther.push(seg);
+      return;
+    }
 
     lineCore.push(seg);
   });
@@ -521,9 +441,11 @@ function renderEquipment(raw) {
   if (lineCore.length) {
     html += `<div class="equip-row">${lineCore.map(e => `<span class="equip-pill">${e}</span>`).join("")}</div>`;
   }
+
   if (lineOther.length) {
     html += `<div class="equip-row special">${lineOther.map(e => `<span class="equip-pill">${e}</span>`).join("")}</div>`;
   }
+
   if (lineKayak.length) {
     html += `<div class="equip-row special">${lineKayak.map(e => `<span class="equip-pill">${e}</span>`).join("")}</div>`;
   }
@@ -531,7 +453,7 @@ function renderEquipment(raw) {
   return html;
 }
 
-function render(data) {
+function render(data){
   const uniquePax = new Set();
 
   const tanksByDisplaySlot = {
@@ -583,10 +505,8 @@ function render(data) {
 
   SLOT_ORDER.forEach(displaySlot => {
     const realSlots = SLOT_GROUPS[displaySlot] || [displaySlot];
-
     let hasData = false;
-    let paxInSlot = 0;
-    const metaLines = new Set();
+    const paxMap = new Map();
 
     realSlots.forEach(realSlot => {
       const acts = data.slots?.[realSlot];
@@ -597,14 +517,27 @@ function render(data) {
       acts.forEach(act => {
         (act.sites || []).forEach(siteObj => {
           (siteObj.guides || []).forEach(g => {
-            paxInSlot += (g.pax || []).length;
-            metaLines.add(`${g.guide} • ${act.activity} • ${siteObj.site}`);
+            (g.pax || []).forEach(p => {
+              if (data.isJ && p.isLinked) return;
+
+              const key = p.paxKey || `${p.firstName || ""}|${p.lastName || ""}`;
+
+              if (!paxMap.has(key)) {
+                paxMap.set(key, p);
+              }
+            });
           });
         });
       });
     });
 
-    if (!hasData) return;
+    if (!hasData || paxMap.size === 0) return;
+
+    const paxList = [...paxMap.values()].sort((a,b) => {
+      const nameA = `${a.lastName || ""} ${a.firstName || ""}`.toLowerCase();
+      const nameB = `${b.lastName || ""} ${b.firstName || ""}`.toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
 
     const c = tanksByDisplaySlot[displaySlot];
     const slotSummary = `🫧 ${c["12L"]}×12L • ${c["15L"]}×15L`;
@@ -634,30 +567,16 @@ function render(data) {
             ${vehicleHTML ? `<span style="margin-left:10px;">${vehicleHTML}</span>` : ""}
           </div>
           <div class="slot-header-right">
-            <span style="font-weight:900;">${paxInSlot} pax</span>
+            <span style="font-weight:900;">${paxList.length} pax</span>
             <span class="slot-tanks">${slotSummary}</span>
           </div>
         </div>
-        <div class="slot-header-sub">${[...metaLines].join(" / ")}</div>
       </div>
-
       <div class="slot-content" id="slot_${displaySlot}">
     `;
 
-    realSlots.forEach(realSlot => {
-      const acts = data.slots?.[realSlot];
-      if (!acts) return;
-
-      acts.forEach(act => {
-        (act.sites || []).forEach(siteObj => {
-          (siteObj.guides || []).forEach(g => {
-            (g.pax || []).forEach(p => {
-              if (data.isJ && p.isLinked) return;
-              html += renderNormalPax(p);
-            });
-          });
-        });
-      });
+    paxList.forEach(p => {
+      html += renderNormalPax(p);
     });
 
     html += `</div>`;
@@ -701,7 +620,7 @@ function render(data) {
   }, 40);
 }
 
-function hasAnyPax(data) {
+function hasAnyPax(data){
   let count = 0;
 
   Object.values(SLOT_GROUPS).flat().forEach(slot => {
@@ -717,7 +636,7 @@ function hasAnyPax(data) {
   return count > 0;
 }
 
-function renderEmptyDay(contentId) {
+function renderEmptyDay(contentId){
   const el = document.getElementById(contentId);
   if (!el) return;
 
@@ -730,7 +649,7 @@ function renderEmptyDay(contentId) {
   `;
 }
 
-function scheduleAutoRefresh() {
+function scheduleAutoRefresh(){
   if (refreshTimer) {
     clearTimeout(refreshTimer);
     refreshTimer = null;
@@ -742,7 +661,7 @@ function scheduleAutoRefresh() {
   }, 60000);
 }
 
-async function loadDesktopDay(isAuto = false) {
+async function loadDesktopDay(isAuto = false){
   if (isLoading) return;
   isLoading = true;
 
@@ -787,7 +706,7 @@ async function loadDesktopDay(isAuto = false) {
   scheduleAutoRefresh();
 }
 
-function renderDesktop(dataJ, dataJ1) {
+function renderDesktop(dataJ, dataJ1){
   const root = document.getElementById("root");
 
   root.innerHTML = `
@@ -806,7 +725,7 @@ function renderDesktop(dataJ, dataJ1) {
     </div>
   `;
 
-  const paxMapJ  = new Map();
+  const paxMapJ = new Map();
   const paxMapJ1 = new Map();
 
   collectPax(dataJ, paxMapJ);
@@ -817,7 +736,7 @@ function renderDesktop(dataJ, dataJ1) {
   equipDiffMap.clear();
 
   linkedKeys.forEach(k => {
-    const pJ  = paxMapJ.get(k);
+    const pJ = paxMapJ.get(k);
     const pJ1 = paxMapJ1.get(k);
 
     if (pJ && pJ1 && hasEquipDiff(pJ, pJ1)) {
@@ -834,17 +753,8 @@ function renderDesktop(dataJ, dataJ1) {
   renderInto("content", "totalJ", dataJ);
   renderInto("contentJ1", "totalJ1", dataJ1);
 
-  if (!hasAnyPax(dataJ)) {
-    renderEmptyDay("content");
-  }
-
-  if (!hasAnyPax(dataJ1)) {
-    renderEmptyDay("contentJ1");
-  }
-
-  const aligned = renderAlignedPax(dataJ, dataJ1);
-  const j1 = document.getElementById("contentJ1");
-  if (j1) j1.insertAdjacentHTML("beforeend", aligned.htmlJ1);
+  if (!hasAnyPax(dataJ)) renderEmptyDay("content");
+  if (!hasAnyPax(dataJ1)) renderEmptyDay("contentJ1");
 }
 
 function collectPax(data, map){
@@ -883,14 +793,14 @@ function markLinkedPax(data, linkedKeys){
   });
 }
 
-function renderInto(contentId, totalId, data) {
+function renderInto(contentId, totalId, data){
   const targetContent = document.getElementById(contentId);
   const targetTotal = document.getElementById(totalId);
   if (!targetContent || !targetTotal) return;
 
   const originalGet = document.getElementById;
 
-  document.getElementById = function(id) {
+  document.getElementById = function(id){
     if (id === "content") return targetContent;
     if (id === "totalLabel") return targetTotal;
     return originalGet.call(document, id);
@@ -901,7 +811,7 @@ function renderInto(contentId, totalId, data) {
   document.getElementById = originalGet;
 }
 
-function renderNormalPax(p) {
+function renderNormalPax(p){
   const showDiff = equipDiffMap.has(p.paxKey) && !p.isJ;
 
   const diffIcon = showDiff
@@ -923,48 +833,18 @@ function renderNormalPax(p) {
   `;
 }
 
-function renderLinkedRow(pJ, pJ1){
-  return `
-    <div class="pax-linked-row">
-      <div>${renderNormalPax(pJ)}</div>
-      <div>${renderNormalPax(pJ1)}</div>
-    </div>
-  `;
-}
-
-function renderAlignedPax(dataJ, dataJ1) {
-  const mapJ  = new Map();
-  const mapJ1 = new Map();
-
-  collectPax(dataJ, mapJ);
-  collectPax(dataJ1, mapJ1);
-
-  const linkedKeys = [...mapJ.keys()].filter(k => mapJ1.has(k));
-
-  let htmlJ1 = "";
-
-  linkedKeys.forEach(k => {
-    const pJ  = mapJ.get(k);
-    const pJ1 = mapJ1.get(k);
-
-    htmlJ1 += renderLinkedRow(pJ, pJ1);
-  });
-
-  return { htmlJ1 };
-}
-
 function normalizeEquip(raw){
   return String(raw || "")
     .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(/[|]/g, "");
+    .replace(/\s+/g,"")
+    .replace(/[|]/g,"");
 }
 
-function hasEquipDiff(pJ, pJ1){
+function hasEquipDiff(pJ,pJ1){
   return normalizeEquip(pJ.equipment) !== normalizeEquip(pJ1.equipment);
 }
 
-function scaleTV() {
+function scaleTV(){
   const app = document.getElementById("app");
   if (!app) return;
 
@@ -973,7 +853,6 @@ function scaleTV() {
   app.style.transform = `scale(${scale})`;
   app.style.transformOrigin = "top left";
 
-  const scaledWidth = 1920 * scale;
   const offsetX = 0;
   const offsetY = 8;
 
@@ -988,8 +867,7 @@ window.addEventListener("load", () => {
 
 loadDesktopDay();
 
-setInterval(()=>location.reload(), 1000*60*30);
-
+setInterval(() => location.reload(), 1000 * 60 * 30);
 </script>
 
 </body>
