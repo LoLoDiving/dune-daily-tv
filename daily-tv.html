@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=1920, initial-scale=1" />
 <title>DAILY PACKAGES – TV</title>
-font
 <style>
 html, body{
   height:100%;
@@ -341,7 +340,7 @@ body{
 <div id="app">
 
 <div class="header-signature">
-  © Design & System — Laurent Sampéré - font-size:11px;
+  © Design & System — Laurent Sampéré;
 </div>
 
   <div id="root"></div>
@@ -837,22 +836,21 @@ function hasEquipDiff(pJ, pJ1){
 }
 
 function scaleTV() {
+
   const app = document.getElementById("app");
   if (!app) return;
 
-  // 🔥 AJUSTE ICI
-  const scale = 0.48;
+  const scale = 0.68;
 
   app.style.transform = `scale(${scale})`;
   app.style.transformOrigin = "top left";
 
-  const offsetX = 20;
-  const offsetY = 15;
+  const offsetX = 0;
+  const offsetY = 10;
 
   app.style.left = offsetX + "px";
   app.style.top = offsetY + "px";
 }
-
 
 window.addEventListener("load", () => {
   scaleTV();                         // 🔥 applique le scale au démarrage
