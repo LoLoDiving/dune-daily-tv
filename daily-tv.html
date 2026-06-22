@@ -85,7 +85,7 @@ body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;backgroun
 
 .tot-line{
   display:grid;
-  grid-template-columns:120px 90px 110px 110px;
+  grid-template-columns:120px 90px 110px 110px 130px;
   align-items:center;
   gap:10px;
   padding:0 0 7px;
@@ -461,6 +461,11 @@ function render(data){
     "AFTERNOON": initTankCounts()
   };
 
+  const guideBlocksByDisplaySlot = {
+    "MORNING": new Set(),
+    "AFTERNOON": new Set()
+  };
+
   const morningPaxKg = new Map();
   let afternoonKg = 0;
 
@@ -474,6 +479,12 @@ function render(data){
       acts.forEach(act => {
         (act.sites || []).forEach(siteObj => {
           (siteObj.guides || []).forEach(g => {
+            const guideName = String(g.guide || g.name || g.guideName || "").trim();
+
+            if (guideName) {
+              guideBlocksByDisplaySlot[displaySlot].add(`${realSlot}|${guideName}`);
+            }
+
             (g.pax || []).forEach(p => {
               if (p.paxKey) uniquePax.add(p.paxKey);
 
@@ -534,9 +545,21 @@ function render(data){
     if (!hasData || paxMap.size === 0) return;
 
     const paxList = [...paxMap.values()].sort((a,b) => {
-      const nameA = `${a.lastName || ""} ${a.firstName || ""}`.toLowerCase();
-      const nameB = `${b.lastName || ""} ${b.firstName || ""}`.toLowerCase();
-      return nameA.localeCompare(nameB);
+      const clean = v => String(v || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim()
+        .toLowerCase();
+
+      const firstA = clean(a.firstName);
+      const firstB = clean(b.firstName);
+      const lastA = clean(a.lastName);
+      const lastB = clean(b.lastName);
+
+      const sortA = firstA ? `${firstA} ${lastA}` : lastA;
+      const sortB = firstB ? `${firstB} ${lastB}` : lastB;
+
+      return sortA.localeCompare(sortB, "en", { sensitivity:"base" });
     });
 
     const c = tanksByDisplaySlot[displaySlot];
@@ -599,6 +622,7 @@ function render(data){
           <span class="tot-badge">⚖️ ${morningKg} kg</span>
           <span class="tot-badge">🫧 ${tanksMorning["12L"]}×12L</span>
           <span class="tot-badge">🫧 ${tanksMorning["15L"]}×15L</span>
+          <span class="tot-badge">🧩 ${guideBlocksByDisplaySlot["MORNING"].size}×12L guide</span>
         </div>
 
         <div class="tot-line">
@@ -606,6 +630,7 @@ function render(data){
           <span class="tot-badge afternoon">⚖️ ${afternoonKg} kg</span>
           <span class="tot-badge afternoon">🫧 ${tanksAfternoon["12L"]}×12L</span>
           <span class="tot-badge afternoon">🫧 ${tanksAfternoon["15L"]}×15L</span>
+          <span class="tot-badge afternoon">🧩 ${guideBlocksByDisplaySlot["AFTERNOON"].size}×12L guide</span>
         </div>
       </div>
     `;
