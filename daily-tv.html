@@ -403,7 +403,8 @@ body{
 
 <div id="app">
   <div class="header-signature">
-    © Design & System — Laurent Sampéré
+    © Design & System — Laurent Sampéré - const scale = 0.50;
+
   </div>
 
   <div id="root"></div>
@@ -967,7 +968,7 @@ function scaleTV() {
   const app = document.getElementById("app");
   if (!app) return;
 
-  const scale = 0.70;
+  const scale = 0.50;
 
   app.style.transform = `scale(${scale})`;
   app.style.transformOrigin = "top left";
