@@ -6,122 +6,41 @@
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>DUNE Malta — Your dive memories</title>
   <style>
-    :root{
-      --navy:#12243c;
-      --navy2:#1b3556;
-      --orange:#f47600;
-      --bg:#eef2f6;
-      --card:#fff;
-      --text:#12243c;
-      --muted:#6d7b8e;
-      --shadow:0 16px 38px rgba(18,36,60,.15);
-    }
+    :root{--navy:#12243c;--orange:#f47600;--bg:#eef2f6;--card:#fff;--text:#12243c;--muted:#6d7b8e;--shadow:0 16px 38px rgba(18,36,60,.15)}
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:Arial,Helvetica,sans-serif;
-      color:var(--text);
-      background:linear-gradient(180deg,var(--navy) 0,var(--navy) 250px,var(--bg) 250px);
-    }
+    body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:linear-gradient(180deg,var(--navy) 0,var(--navy) 250px,var(--bg) 250px)}
     .wrap{width:min(1120px,calc(100% - 28px));margin:auto;padding:30px 0 48px}
-    .brand{text-align:center;color:#fff;margin-bottom:22px}
-    .brand h1{margin:0;font-size:18px;letter-spacing:.2em}
-    .brand p{margin:7px 0 0;color:rgba(255,255,255,.78);font-size:13px;letter-spacing:.08em}
-    .hero{
-      max-width:760px;
-      margin:0 auto 22px;
-      padding:26px 24px;
-      text-align:center;
-      background:#fff;
-      border-radius:24px;
-      box-shadow:var(--shadow);
-    }
-    .hero h2{margin:0 0 7px;font-size:30px;color:var(--navy)}
-    .hero p{margin:0;color:var(--muted);font-size:15px;line-height:1.5}
-    .hero .meta{display:inline-flex;gap:8px;align-items:center;margin-top:14px;padding:8px 12px;border-radius:999px;background:#fff1e5;color:#9b4b00;font-size:13px;font-weight:800}
-
+    .brand{text-align:center;color:#fff;margin-bottom:22px}.brand h1{margin:0;font-size:18px;letter-spacing:.2em}.brand p{margin:7px 0 0;color:rgba(255,255,255,.78);font-size:13px;letter-spacing:.08em}
+    .hero{max-width:760px;margin:0 auto 22px;padding:25px 22px;text-align:center;background:#fff;border-radius:24px;box-shadow:var(--shadow)}
+    .hero h2{margin:0 0 7px;font-size:30px}.hero p{margin:0;color:var(--muted);font-size:15px}.hero .meta{display:inline-flex;margin-top:14px;padding:8px 12px;border-radius:999px;background:#fff1e5;color:#9b4b00;font-size:13px;font-weight:800}
     .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    .card{
-      overflow:hidden;
-      background:var(--card);
-      border-radius:22px;
-      box-shadow:var(--shadow);
-    }
-    .visual{
-      position:relative;
-      aspect-ratio:16/10;
-      overflow:hidden;
-      background:linear-gradient(135deg,#182d49,#0d1b2f);
-    }
+    .card{overflow:hidden;background:var(--card);border-radius:22px;box-shadow:var(--shadow)}
+    .visual{position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,#182d49,#0d1b2f)}
     .visual img{width:100%;height:100%;display:block;object-fit:cover}
-    .placeholder{
-      width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;
-      gap:8px;color:rgba(255,255,255,.72);font-size:13px;text-align:center;padding:20px;
-    }
-    .placeholder .icon{font-size:32px;line-height:1}
-    .badge{
-      position:absolute;top:12px;left:12px;
-      padding:7px 10px;border-radius:999px;
-      background:rgba(18,36,60,.88);color:#fff;
-      font-size:11px;font-weight:900;letter-spacing:.07em;
-    }
-    .playmark{
-      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;
-    }
-    .playmark span{
-      width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-      background:rgba(255,255,255,.9);color:var(--navy);font-size:20px;box-shadow:0 8px 24px rgba(0,0,0,.2);
-      padding-left:3px;
-    }
-    .body{padding:14px}
-    .filename{margin:0 0 12px;font-size:15px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--navy)}
-    button{
-      width:100%;border:0;border-radius:14px;padding:13px 14px;
-      background:var(--orange);color:#fff;font-size:14px;font-weight:900;cursor:pointer;
-      box-shadow:0 7px 18px rgba(244,118,0,.24);
-    }
-    button:hover{filter:brightness(.97)}
-    button:disabled{opacity:.55;cursor:progress}
-    .all{
-      margin-top:20px;background:var(--navy);box-shadow:0 10px 24px rgba(18,36,60,.2);
-    }
-    .status{min-height:24px;margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
-    .status.ok{color:#237b46}.status.error{color:#b23620}
+    .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(255,255,255,.72);font-size:13px;text-align:center;padding:20px}.placeholder .icon{font-size:32px}
+    .badge{position:absolute;top:12px;left:12px;padding:7px 10px;border-radius:999px;background:rgba(18,36,60,.88);color:#fff;font-size:11px;font-weight:900;letter-spacing:.07em}
+    .playmark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}.playmark span{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.9);color:var(--navy);font-size:19px;box-shadow:0 8px 24px rgba(0,0,0,.2);padding-left:3px}
+    .body{padding:14px}.filename{margin:0 0 12px;font-size:15px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    button{width:100%;border:0;border-radius:14px;padding:13px 14px;background:var(--orange);color:#fff;font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 7px 18px rgba(244,118,0,.24)}button:hover{filter:brightness(.97)}button:disabled{opacity:.55;cursor:progress}
+    .all{margin-top:20px;background:var(--navy);box-shadow:0 10px 24px rgba(18,36,60,.2)}
+    .status{min-height:24px;margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}.status.ok{color:#237b46}.status.error{color:#b23620}
     .foot{text-align:center;margin:8px auto 0;max-width:650px;color:#8290a1;font-size:11px;line-height:1.45}
-
     @media(max-width:850px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:540px){
-      .wrap{width:min(100% - 18px,1120px);padding-top:22px}
-      .hero{padding:22px 16px}.hero h2{font-size:25px}
-      .gallery{grid-template-columns:1fr;gap:13px}
-      .visual{aspect-ratio:16/9}
-    }
+    @media(max-width:540px){.wrap{width:min(100% - 18px,1120px);padding-top:22px}.hero{padding:22px 16px}.hero h2{font-size:25px}.gallery{grid-template-columns:1fr;gap:13px}.visual{aspect-ratio:16/9}}
   </style>
 </head>
 <body>
   <main class="wrap">
-    <header class="brand">
-      <h1>DUNE MALTA</h1>
-      <p>DIVE CENTRE · MELLIEĦA</p>
-    </header>
-
-    <section class="hero">
-      <h2>Your dive memories 🤿</h2>
-      <p>Your photos and videos from the Try Dive are ready.</p>
-      <div class="meta">14 August 2026 · 5 media</div>
-    </section>
-
+    <header class="brand"><h1>DUNE MALTA</h1><p>DIVE CENTRE · MELLIEĦA</p></header>
+    <section class="hero"><h2>Your dive memories 🤿</h2><p>Your photos and videos from the Try Dive are ready.</p><div class="meta">14 August 2026 · 5 media</div></section>
     <section class="gallery" id="gallery"></section>
     <button class="all" id="downloadAll">Download all 5 originals</button>
     <div class="status" id="status"></div>
     <div class="foot">Original files are delivered directly from the GoPro cloud.</div>
   </main>
-
 <script>
 (() => {
   'use strict';
-
   const API_ACCEPT='application/vnd.gopro.jk.media+json; version=2.0.0';
   const SHARE_ID='0cf6c8f1-1fea-4fd6-9ea4-097af9afa9fd';
   const media=[
@@ -131,23 +50,15 @@
     {id:'6a7ee6aec188cddc47b434a3',type:'Photo',filename:'GOPR1457.JPG'},
     {id:'6a7ee6b88a3bd59a69e85f52',type:'Photo',filename:'GOPR1458.JPG'}
   ];
-
   const gallery=document.getElementById('gallery');
   const status=document.getElementById('status');
   const allButton=document.getElementById('downloadAll');
+  const objectUrls=[];
 
   media.forEach((m,index)=>{
     const card=document.createElement('article');
     card.className='card';
-    card.innerHTML=`
-      <div class="visual" id="visual-${index}">
-        <div class="placeholder"><div class="icon">${m.type==='Video'?'🎬':'📷'}</div><div>Loading preview…</div></div>
-        <span class="badge">${escapeHtml(m.type.toUpperCase())}</span>
-      </div>
-      <div class="body">
-        <p class="filename">${escapeHtml(m.filename)}</p>
-        <button data-index="${index}">Download original</button>
-      </div>`;
+    card.innerHTML=`<div class="visual" id="visual-${index}"><div class="placeholder"><div class="icon">${m.type==='Video'?'🎬':'📷'}</div><div>Loading preview…</div></div><span class="badge">${escapeHtml(m.type.toUpperCase())}</span></div><div class="body"><p class="filename">${escapeHtml(m.filename)}</p><button data-index="${index}">Download original</button></div>`;
     gallery.appendChild(card);
   });
 
@@ -160,184 +71,139 @@
   });
 
   allButton.addEventListener('click',async()=>{
-    allButton.disabled=true;
-    setStatus('Preparing the 5 original files…');
-    let opened=0;
-    try{
-      for(const m of media){
-        const source=await resolveSource(m.id);
-        triggerDirectDownload(source.url,m.filename);
-        opened+=1;
-        await sleep(800);
-      }
-      setStatus(`${opened} downloads started.`,'ok');
-    }catch(error){
-      setStatus(`Download interrupted: ${friendlyError(error)}`,'error');
-    }finally{
-      allButton.disabled=false;
-    }
+    allButton.disabled=true;setStatus('Preparing the 5 original files…');let opened=0;
+    try{for(const m of media){const source=await resolveSource(m.id);triggerDirectDownload(source.url,m.filename);opened+=1;await sleep(800);}setStatus(`${opened} downloads started.`,'ok');}
+    catch(error){setStatus(`Download interrupted: ${friendlyError(error)}`,'error');}
+    finally{allButton.disabled=false;}
   });
 
   async function hydratePreviews(){
     let shareJson=null;
-    try{
-      shareJson=await proxyJson(`https://api.gopro.com/media/items/${SHARE_ID}?page=1&per_page=30`);
-    }catch(_){ }
-
-    const previewMap=shareJson?extractGoProThumbnailMap(shareJson):{};
+    try{shareJson=await proxyJson(`https://api.gopro.com/media/items/${SHARE_ID}?page=1&per_page=30`);}catch(_){ }
+    const previewMap=shareJson?extractPreviewMap(shareJson):{};
 
     await Promise.all(media.map(async(m,index)=>{
       const visual=document.getElementById(`visual-${index}`);
       let previewUrl=previewMap[m.id]||'';
-
       if(!previewUrl){
-        try{
-          const mediaJson=await proxyJson(`https://api.gopro.com/media/${encodeURIComponent(m.id)}`);
-          previewUrl=findImageUrl(mediaJson);
-        }catch(_){ }
+        try{const mediaJson=await proxyJson(`https://api.gopro.com/media/${encodeURIComponent(m.id)}`);previewUrl=findImageUrl(mediaJson);}catch(_){ }
       }
+      if(!previewUrl){renderPlaceholder(visual,m);return;}
 
-      if(previewUrl){
-        visual.innerHTML=`<img src="${escapeHtml(previewUrl)}" alt="${escapeHtml(m.filename)}" loading="lazy"><span class="badge">${escapeHtml(m.type.toUpperCase())}</span>${m.type==='Video'?'<div class="playmark"><span>▶</span></div>':''}`;
-      }else{
-        visual.innerHTML=`<div class="placeholder"><div class="icon">${m.type==='Video'?'🎬':'📷'}</div><div>${escapeHtml(m.filename)}</div></div><span class="badge">${escapeHtml(m.type.toUpperCase())}</span>`;
-      }
+      const localUrl=await materializePreview(previewUrl);
+      if(!localUrl){renderPlaceholder(visual,m);return;}
+      objectUrls.push(localUrl);
+      visual.innerHTML=`<img src="${localUrl}" alt="${escapeHtml(m.filename)}"><span class="badge">${escapeHtml(m.type.toUpperCase())}</span>${m.type==='Video'?'<div class="playmark"><span>▶</span></div>':''}`;
     }));
   }
 
-  function extractGoProThumbnailMap(root){
+  function extractPreviewMap(root){
     const map={};
     const seen=new WeakSet();
 
-    function visit(value){
-      if(typeof value==='string'){
-        const url=value.trim();
-        if(/^https:\/\/images-\d+\.gopro\.com\/resize\//i.test(url)){
-          const mediaId=decodeMediumIdFromResizeUrl(url);
-          if(mediaId&&!map[mediaId])map[mediaId]=url;
-        }
-        return;
-      }
+    function walk(value){
       if(!value||typeof value!=='object'||seen.has(value))return;
       seen.add(value);
-      Object.values(value).forEach(visit);
+
+      if(!Array.isArray(value)){
+        const directId=normalizeMediaId(value.id||value.media_id||value.medium_id);
+        if(directId&&!map[directId]){
+          const directImage=findImageUrl(value);
+          if(directImage)map[directId]=directImage;
+        }
+      }
+
+      Object.values(value).forEach(child=>{
+        if(typeof child==='string'){
+          const url=child.trim();
+          if(/^https:\/\/images-\d+\.gopro\.com\/resize\//i.test(url)){
+            const tokenId=decodeMediumIdFromResizeUrl(url);
+            if(tokenId&&!map[tokenId])map[tokenId]=url;
+          }
+        }else walk(child);
+      });
     }
 
-    visit(root);
+    walk(root);
     return map;
   }
+
+  function normalizeMediaId(value){const id=String(value||'').trim().toLowerCase();return /^[0-9a-f]{24}$/.test(id)?id:'';}
 
   function decodeMediumIdFromResizeUrl(url){
     try{
       const token=url.split('/resize/')[1]?.split(/[?#]/)[0]||'';
-      const parts=token.split('.');
-      if(parts.length<2)return '';
-      let payload=parts[1].replace(/-/g,'+').replace(/_/g,'/');
-      while(payload.length%4)payload+='=';
-      const json=JSON.parse(atob(payload));
-      const id=String(json.medium_id||'').toLowerCase();
-      return /^[0-9a-f]{24}$/.test(id)?id:'';
+      const parts=token.split('.');if(parts.length<2)return '';
+      let payload=parts[1].replace(/-/g,'+').replace(/_/g,'/');while(payload.length%4)payload+='=';
+      return normalizeMediaId(JSON.parse(atob(payload)).medium_id);
     }catch(_){return '';}
   }
 
   function findImageUrl(root){
-    const candidates=[];
-    const seen=new WeakSet();
-
-    function visit(value){
+    const candidates=[];const seen=new WeakSet();
+    function visit(value,key=''){
       if(typeof value==='string'){
-        const url=value.trim();
-        if(/^https:\/\/images-\d+\.gopro\.com\/resize\//i.test(url))candidates.push({score:100,url});
-        else if(/^https:\/\/images-\d+\.gopro\.com\//i.test(url))candidates.push({score:90,url});
-        else if(/^https:\/\/[^\s]+\.(?:jpg|jpeg|png|webp)(?:[?#].*)?$/i.test(url))candidates.push({score:70,url});
+        const url=value.trim();let score=0;
+        if(/^https:\/\/images-\d+\.gopro\.com\/resize\//i.test(url))score=120;
+        else if(/^https:\/\/images-\d+\.gopro\.com\//i.test(url))score=110;
+        else if(/^https:\/\/[^\s]+\.(?:jpg|jpeg|png|webp)(?:[?#].*)?$/i.test(url))score=80;
+        if(/thumb|preview|poster|image/i.test(key))score+=20;
+        if(score)candidates.push({url,score});
         return;
       }
       if(!value||typeof value!=='object'||seen.has(value))return;
-      seen.add(value);
-      Object.values(value).forEach(visit);
+      seen.add(value);Object.entries(value).forEach(([k,v])=>visit(v,k));
     }
-
-    visit(root);
-    candidates.sort((a,b)=>b.score-a.score);
-    return candidates.length?candidates[0].url:'';
+    visit(root);candidates.sort((a,b)=>b.score-a.score);return candidates.length?candidates[0].url:'';
   }
 
-  async function downloadOne(m,button){
-    const old=button.textContent;
-    button.disabled=true;
-    button.textContent='Preparing…';
-    setStatus(`Preparing ${m.filename}…`);
-    try{
-      const source=await resolveSource(m.id);
-      triggerDirectDownload(source.url,m.filename);
-      setStatus(`${m.filename} ready.`,'ok');
-    }catch(error){
-      setStatus(`Unable to prepare ${m.filename}: ${friendlyError(error)}`,'error');
-    }finally{
-      button.disabled=false;
-      button.textContent=old;
+  async function materializePreview(url){
+    const targets=[
+      `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+      `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+    ];
+    for(const target of targets){
+      try{
+        const response=await fetch(target,{cache:'no-store'});
+        if(!response.ok)continue;
+        const blob=await response.blob();
+        if(!blob||!blob.size)continue;
+        return URL.createObjectURL(blob);
+      }catch(_){ }
     }
+    return '';
+  }
+
+  function renderPlaceholder(visual,m){visual.innerHTML=`<div class="placeholder"><div class="icon">${m.type==='Video'?'🎬':'📷'}</div><div>${escapeHtml(m.filename)}</div></div><span class="badge">${escapeHtml(m.type.toUpperCase())}</span>`;}
+
+  async function downloadOne(m,button){
+    const old=button.textContent;button.disabled=true;button.textContent='Preparing…';setStatus(`Preparing ${m.filename}…`);
+    try{const source=await resolveSource(m.id);triggerDirectDownload(source.url,m.filename);setStatus(`${m.filename} ready.`,'ok');}
+    catch(error){setStatus(`Unable to prepare ${m.filename}: ${friendlyError(error)}`,'error');}
+    finally{button.disabled=false;button.textContent=old;}
   }
 
   async function resolveSource(id){
     const json=await proxyJson(`https://api.gopro.com/media/${encodeURIComponent(id)}/download`);
     const embedded=json&&json._embedded?json._embedded:{};
-    const variants=[]
-      .concat(Array.isArray(embedded.variations)?embedded.variations:[])
-      .concat(Array.isArray(embedded.files)?embedded.files:[])
-      .concat(Array.isArray(embedded.sidecar_files)?embedded.sidecar_files:[])
-      .filter(v=>v&&v.url);
-
-    const source=variants.find(v=>String(v.label||'').toLowerCase()==='source')
-      ||variants.find(v=>String(v.label||'').toLowerCase()==='baked_source')
-      ||variants.find(v=>String(v.label||'').toLowerCase()==='concat');
-
-    if(!source||!source.url)throw new Error('original source unavailable');
-    return source;
+    const variants=[].concat(Array.isArray(embedded.variations)?embedded.variations:[]).concat(Array.isArray(embedded.files)?embedded.files:[]).concat(Array.isArray(embedded.sidecar_files)?embedded.sidecar_files:[]).filter(v=>v&&v.url);
+    const source=variants.find(v=>String(v.label||'').toLowerCase()==='source')||variants.find(v=>String(v.label||'').toLowerCase()==='baked_source')||variants.find(v=>String(v.label||'').toLowerCase()==='concat');
+    if(!source||!source.url)throw new Error('original source unavailable');return source;
   }
 
   async function proxyJson(target){
-    let json=null;
-    let lastError=null;
-
-    try{
-      const response=await fetch(`https://corsproxy.io/?url=${encodeURIComponent(target)}`,{
-        method:'GET',cache:'no-store',headers:{Accept:API_ACCEPT}
-      });
-      if(!response.ok)throw new Error(`proxy HTTP ${response.status}`);
-      json=await response.json();
-    }catch(error){lastError=error;}
-
-    if(!json){
-      try{
-        const response=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`,{cache:'no-store'});
-        if(!response.ok)throw new Error(`fallback HTTP ${response.status}`);
-        json=await response.json();
-      }catch(error){lastError=error;}
-    }
-
-    if(!json)throw new Error(lastError?lastError.message:'media service unavailable');
-    return json;
+    let json=null,lastError=null;
+    try{const response=await fetch(`https://corsproxy.io/?url=${encodeURIComponent(target)}`,{method:'GET',cache:'no-store',headers:{Accept:API_ACCEPT}});if(!response.ok)throw new Error(`proxy HTTP ${response.status}`);json=await response.json();}catch(error){lastError=error;}
+    if(!json){try{const response=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`,{cache:'no-store'});if(!response.ok)throw new Error(`fallback HTTP ${response.status}`);json=await response.json();}catch(error){lastError=error;}}
+    if(!json)throw new Error(lastError?lastError.message:'media service unavailable');return json;
   }
 
-  function triggerDirectDownload(url,filename){
-    const a=document.createElement('a');
-    a.href=url;
-    a.target='_blank';
-    a.rel='noopener';
-    a.download=filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }
-
-  function setStatus(message,cls=''){
-    status.textContent=message;
-    status.className=`status ${cls}`.trim();
-  }
+  function triggerDirectDownload(url,filename){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.download=filename;document.body.appendChild(a);a.click();a.remove();}
+  function setStatus(message,cls=''){status.textContent=message;status.className=`status ${cls}`.trim();}
   function friendlyError(error){return String(error&&error.message||error||'unknown error');}
   function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms));}
   function escapeHtml(value){return String(value).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+  window.addEventListener('beforeunload',()=>objectUrls.forEach(url=>URL.revokeObjectURL(url)));
 })();
 </script>
 </body>
