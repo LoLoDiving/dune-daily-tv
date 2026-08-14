@@ -176,7 +176,7 @@ jobs:
       - name: Commit resolved media data
         shell: bash
         run: |
-          if git diff --quiet -- gopro-data; then
+          if [ -z "$(git status --porcelain -- gopro-data)" ]; then
             echo "No media data changes."
             exit 0
           fi
