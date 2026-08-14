@@ -70,7 +70,7 @@
         const source = await resolveSource(m.id);
         triggerDirectDownload(source.url, m.filename);
         opened += 1;
-        await sleep(650);
+        await sleep(800);
       }
       setStatus(`${opened} downloads started.`, 'ok');
     } catch (error) {
@@ -98,15 +98,38 @@
   }
 
   async function resolveSource(id) {
-    const response = await fetch(`https://api.gopro.com/media/${encodeURIComponent(id)}/download`, {
-      method:'GET',
-      mode:'cors',
-      credentials:'omit',
-      cache:'no-store',
-      headers:{Accept:API_ACCEPT}
-    });
-    if (!response.ok) throw new Error(`GoPro HTTP ${response.status}`);
-    const json = await response.json();
+    const target = `https://api.gopro.com/media/${encodeURIComponent(id)}/download`;
+    let json = null;
+    let lastError = null;
+
+    try {
+      const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(target)}`;
+      const response = await fetch(proxyUrl, {
+        method:'GET',
+        cache:'no-store',
+        headers:{Accept:API_ACCEPT}
+      });
+      if (!response.ok) throw new Error(`proxy HTTP ${response.status}`);
+      json = await response.json();
+    } catch (error) {
+      lastError = error;
+    }
+
+    if (!json) {
+      try {
+        const fallbackUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`;
+        const response = await fetch(fallbackUrl, {cache:'no-store'});
+        if (!response.ok) throw new Error(`fallback HTTP ${response.status}`);
+        json = await response.json();
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    if (!json) {
+      throw new Error(lastError ? lastError.message : 'media service unavailable');
+    }
+
     const embedded = json && json._embedded ? json._embedded : {};
     const variants = []
       .concat(Array.isArray(embedded.variations) ? embedded.variations : [])
