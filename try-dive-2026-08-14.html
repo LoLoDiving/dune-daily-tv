@@ -6,99 +6,35 @@
   <meta name="robots" content="noindex,nofollow,noarchive">
   <title>DUNE Malta — Your dive memories</title>
   <style>
-    :root{
-      --navy:#12243c;
-      --orange:#f47600;
-      --orange-soft:#fff1e5;
-      --bg:#eef2f6;
-      --card:#ffffff;
-      --text:#172033;
-      --muted:#64748b;
-      --border:#dde5ee;
-      --shadow:0 18px 42px rgba(18,36,60,.14);
-      --radius:24px;
-    }
+    :root{--navy:#12243c;--orange:#f47600;--orange-soft:#fff1e5;--bg:#eef2f6;--card:#fff;--text:#172033;--muted:#64748b;--border:#dde5ee;--shadow:0 18px 42px rgba(18,36,60,.14)}
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top left,rgba(255,255,255,.08),transparent 30%),
-        linear-gradient(180deg,var(--navy) 0,var(--navy) 280px,var(--bg) 280px);
-      min-height:100vh;
-    }
-    .wrap{width:min(100% - 24px,960px);margin:auto;padding:30px 0 52px}
-    .brand{text-align:center;color:#fff;margin-bottom:20px}
-    .brand h1{margin:0;font-size:17px;letter-spacing:.18em}
-    .brand p{margin:8px 0 0;color:rgba(255,255,255,.78);font-size:13px;letter-spacing:.08em}
-    .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-    .pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:20px;padding:16px 14px;text-align:center}
-    .pill strong{display:block;font-size:22px;margin-bottom:4px}
-    .pill span{font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.82);text-transform:uppercase}
-    .hero,.item{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .hero{padding:32px 28px;text-align:center;margin-bottom:18px}
-    .hero h2{margin:0 0 10px;font-size:32px;color:var(--navy)}
-    .hero p{margin:0;color:var(--muted);line-height:1.6;font-size:17px}
-    .tag{display:inline-flex;margin-top:16px;padding:10px 14px;border-radius:999px;background:var(--orange-soft);color:#9b4b00;font-weight:700;font-size:13px}
-    .list{display:grid;gap:14px}
-    .item{padding:14px;display:grid;grid-template-columns:148px 1fr auto;gap:16px;align-items:center}
-    .thumb{width:148px;height:98px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(135deg,#dfe7ef,#f5f7fa);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:#6c7a8d;font-weight:700;font-size:13px}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-    .placeholder{padding:12px;text-align:center;line-height:1.35}
-    .badge{position:absolute;top:10px;left:10px;padding:6px 9px;border-radius:999px;background:rgba(18,36,60,.86);color:#fff;font-size:11px;font-weight:800;letter-spacing:.05em}
-    .meta h3{margin:0 0 7px;font-size:22px;color:var(--navy)}
-    .meta p{margin:0;color:var(--muted);font-size:15px;line-height:1.45}
-    .type{display:inline-block;margin-right:8px;font-weight:800;color:var(--navy)}
-    .line2{margin-top:8px!important;font-size:13px!important}
-    button{border:0;border-radius:16px;padding:14px 18px;background:var(--orange);color:#fff;font-size:14px;font-weight:800;cursor:pointer;min-width:174px;box-shadow:0 8px 20px rgba(244,118,0,.24)}
-    button:hover{filter:brightness(.97)}
-    button:disabled{opacity:.55;cursor:progress}
-    .all{margin:18px 0 0;width:100%;background:var(--navy);box-shadow:0 10px 24px rgba(18,36,60,.22)}
-    .status{min-height:24px;margin-top:16px;text-align:center;color:var(--muted);font-size:14px}
-    .foot{text-align:center;margin-top:22px;color:#7b8797;font-size:12px;line-height:1.55;max-width:720px;margin-inline:auto}
-    .error{color:#b23620}.ok{color:#237b46}
-    @media(max-width:860px){
-      .summary{grid-template-columns:1fr}
-      .item{grid-template-columns:120px 1fr;grid-template-areas:'thumb meta' 'button button'}
-      .thumb{grid-area:thumb;width:120px;height:84px}.meta{grid-area:meta}.item button{grid-area:button;width:100%}
-    }
-    @media(max-width:640px){
-      .wrap{width:min(100% - 18px,960px)}
-      .hero{padding:24px 18px}.hero h2{font-size:26px}.hero p{font-size:15px}
-      .item{grid-template-columns:1fr;grid-template-areas:'thumb' 'meta' 'button'}
-      .thumb{width:100%;height:180px}
-      .meta h3{font-size:19px}
-    }
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at top left,rgba(255,255,255,.08),transparent 30%),linear-gradient(180deg,var(--navy) 0,var(--navy) 285px,var(--bg) 285px);min-height:100vh}
+    .wrap{width:min(100% - 24px,980px);margin:auto;padding:30px 0 52px}
+    .brand{text-align:center;color:#fff;margin-bottom:20px}.brand h1{margin:0;font-size:17px;letter-spacing:.18em}.brand p{margin:8px 0 0;color:rgba(255,255,255,.78);font-size:13px;letter-spacing:.08em}
+    .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:20px;padding:16px 14px;text-align:center}.pill strong{display:block;font-size:22px;margin-bottom:4px}.pill span{font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.82);text-transform:uppercase}
+    .hero,.item{background:var(--card);border-radius:24px;box-shadow:var(--shadow)}.hero{padding:32px 28px;text-align:center;margin-bottom:18px}.hero h2{margin:0 0 10px;font-size:32px;color:var(--navy)}.hero p{margin:0;color:var(--muted);line-height:1.6;font-size:17px}.tag{display:inline-flex;margin-top:16px;padding:10px 14px;border-radius:999px;background:var(--orange-soft);color:#9b4b00;font-weight:700;font-size:13px}
+    .list{display:grid;gap:16px}.item{padding:14px;display:grid;grid-template-columns:220px 1fr auto;gap:18px;align-items:center}.preview{width:220px;height:138px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(135deg,#dfe7ef,#f5f7fa);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:#6c7a8d;font-weight:700;font-size:13px}.preview img,.preview video{width:100%;height:100%;object-fit:cover;display:block;background:#0f172a}.preview video{object-fit:contain}.placeholder{padding:12px;text-align:center;line-height:1.35}.badge{position:absolute;top:10px;left:10px;padding:6px 9px;border-radius:999px;background:rgba(18,36,60,.86);color:#fff;font-size:11px;font-weight:800;letter-spacing:.05em;z-index:2}
+    .meta h3{margin:0 0 7px;font-size:22px;color:var(--navy)}.meta p{margin:0;color:var(--muted);font-size:15px;line-height:1.45}.type{display:inline-block;margin-right:8px;font-weight:800;color:var(--navy)}.line2{margin-top:8px!important;font-size:13px!important}
+    button{border:0;border-radius:16px;padding:14px 18px;background:var(--orange);color:#fff;font-size:14px;font-weight:800;cursor:pointer;min-width:174px;box-shadow:0 8px 20px rgba(244,118,0,.24)}button:hover{filter:brightness(.97)}button:disabled{opacity:.55;cursor:progress}.all{margin:18px 0 0;width:100%;background:var(--navy);box-shadow:0 10px 24px rgba(18,36,60,.22)}
+    .status{min-height:24px;margin-top:16px;text-align:center;color:var(--muted);font-size:14px}.foot{text-align:center;margin-top:22px;color:#7b8797;font-size:12px;line-height:1.55;max-width:760px;margin-inline:auto}.error{color:#b23620}.ok{color:#237b46}
+    @media(max-width:900px){.item{grid-template-columns:180px 1fr;grid-template-areas:'preview meta' 'button button'}.preview{grid-area:preview;width:180px;height:115px}.meta{grid-area:meta}.item button{grid-area:button;width:100%}}
+    @media(max-width:640px){.wrap{width:min(100% - 18px,980px)}.summary{grid-template-columns:1fr}.hero{padding:24px 18px}.hero h2{font-size:26px}.hero p{font-size:15px}.item{grid-template-columns:1fr;grid-template-areas:'preview' 'meta' 'button'}.preview{width:100%;height:210px}.meta h3{font-size:19px}}
   </style>
 </head>
 <body>
   <main class="wrap">
     <header class="brand"><h1>DUNE MALTA</h1><p>DIVE CENTRE · MELLIEĦA</p></header>
-
-    <section class="summary">
-      <div class="pill"><strong>3</strong><span>Videos</span></div>
-      <div class="pill"><strong>2</strong><span>Photos</span></div>
-      <div class="pill"><strong>14 Aug 2026</strong><span>Try Dive</span></div>
-    </section>
-
-    <section class="hero">
-      <h2>Your dive memories 🤿</h2>
-      <p>Here are the original photos and videos from your Try Dive.<br>Preview a media below and download the original file in one click.</p>
-      <span class="tag">5 original media · direct from GoPro cloud</span>
-    </section>
-
+    <section class="summary"><div class="pill"><strong>3</strong><span>Videos</span></div><div class="pill"><strong>2</strong><span>Photos</span></div><div class="pill"><strong>14 Aug 2026</strong><span>Try Dive</span></div></section>
+    <section class="hero"><h2>Your dive memories 🤿</h2><p>Here are the original photos and videos from your Try Dive.<br>Preview each memory below and download the original file in one click.</p><span class="tag">5 original media · direct from GoPro cloud</span></section>
     <section class="list" id="list"></section>
     <button class="all" id="downloadAll">Download all 5 originals</button>
     <div class="status" id="status"></div>
     <div class="foot">Files are delivered directly from the original GoPro cloud source. If your browser asks permission for multiple downloads, please allow it.</div>
   </main>
-
 <script>
 (() => {
   'use strict';
   const API_ACCEPT='application/vnd.gopro.jk.media+json; version=2.0.0';
-  const SHARE_ID='0cf6c8f1-1fea-4fd6-9ea4-097af9afa9fd';
   const media=[
     {id:'6a7ee6c156ca4c102f512ba3',type:'Video',filename:'GX011454.MP4',resolution:'3840 × 2160 · 4K'},
     {id:'6a7ee6ee99cd5ed33216eabb',type:'Video',filename:'GX011455.MP4',resolution:'3840 × 2160 · 4K'},
@@ -106,6 +42,7 @@
     {id:'6a7ee6aec188cddc47b434a3',type:'Photo',filename:'GOPR1457.JPG',resolution:'5184 × 3888'},
     {id:'6a7ee6b88a3bd59a69e85f52',type:'Photo',filename:'GOPR1458.JPG',resolution:'5184 × 3888'}
   ];
+  const cache=new Map();
   const list=document.getElementById('list');
   const status=document.getElementById('status');
   const allButton=document.getElementById('downloadAll');
@@ -113,7 +50,7 @@
   media.forEach((m,index)=>{
     const item=document.createElement('article');
     item.className='item';
-    item.innerHTML=`<div class="thumb" id="thumb-${index}"><div class="placeholder">Loading preview…</div><span class="badge">${escapeHtml(m.type.toUpperCase())}</span></div><div class="meta"><h3>${escapeHtml(m.filename)}</h3><p><span class="type">${escapeHtml(m.type)}</span>${escapeHtml(m.resolution)}</p><p class="line2">Original file from your dive session.</p></div><button data-index="${index}">Download original</button>`;
+    item.innerHTML=`<div class="preview" id="preview-${index}"><div class="placeholder">Loading preview…</div><span class="badge">${escapeHtml(m.type.toUpperCase())}</span></div><div class="meta"><h3>${escapeHtml(m.filename)}</h3><p><span class="type">${escapeHtml(m.type)}</span>${escapeHtml(m.resolution)}</p><p class="line2">Original file from your dive session.</p></div><button data-index="${index}">Download original</button>`;
     list.appendChild(item);
   });
 
@@ -126,60 +63,38 @@
   });
 
   allButton.addEventListener('click',async()=>{
-    allButton.disabled=true;
-    setStatus('Preparing the 5 original files…');
-    let opened=0;
+    allButton.disabled=true;setStatus('Preparing the 5 original files…');let opened=0;
     try{
-      for(const m of media){
-        const source=await resolveSource(m.id);
-        triggerDirectDownload(source.url,m.filename);
-        opened+=1;
-        await sleep(800);
-      }
+      for(const m of media){const resolved=await resolveMedia(m.id);triggerDirectDownload(resolved.source.url,m.filename);opened+=1;await sleep(800);}
       setStatus(`${opened} downloads started.`,'ok');
-    }catch(error){
-      setStatus(`Download interrupted: ${friendlyError(error)}`,'error');
-    }finally{allButton.disabled=false;}
+    }catch(error){setStatus(`Download interrupted: ${friendlyError(error)}`,'error');}
+    finally{allButton.disabled=false;}
   });
 
   async function hydratePreviews(){
-    let shareJson=null;
-    try{shareJson=await proxyJson(`https://api.gopro.com/media/items/${SHARE_ID}?page=1&per_page=30`);}catch(_){ }
-
     await Promise.all(media.map(async(m,index)=>{
-      const thumb=document.getElementById(`thumb-${index}`);
+      const box=document.getElementById(`preview-${index}`);
       try{
-        let previewUrl=shareJson ? findPreviewNearMediaId(shareJson,m.id) : '';
-        if(!previewUrl){
-          const mediaJson=await proxyJson(`https://api.gopro.com/media/${encodeURIComponent(m.id)}`);
-          previewUrl=findAnyPreviewUrl(mediaJson);
+        const resolved=await resolveMedia(m.id);
+        const badge=`<span class="badge">${escapeHtml(m.type.toUpperCase())}</span>`;
+        if(m.type==='Photo'){
+          box.innerHTML=`<img src="${escapeHtml(resolved.preview.url)}" alt="Preview of ${escapeHtml(m.filename)}" loading="lazy">${badge}`;
+        }else{
+          box.innerHTML=`<video src="${escapeHtml(resolved.preview.url)}" muted playsinline preload="metadata" controls></video>${badge}`;
         }
-        if(!previewUrl)throw new Error('preview unavailable');
-        thumb.innerHTML=`<img src="${escapeHtml(previewUrl)}" alt="Preview of ${escapeHtml(m.filename)}" loading="lazy"><span class="badge">${escapeHtml(m.type.toUpperCase())}</span>`;
-      }catch(_){
-        thumb.innerHTML=`<div class="placeholder">Preview unavailable</div><span class="badge">${escapeHtml(m.type.toUpperCase())}</span>`;
-      }
+      }catch(_){box.innerHTML=`<div class="placeholder">Preview unavailable</div><span class="badge">${escapeHtml(m.type.toUpperCase())}</span>`;}
     }));
   }
 
   async function downloadOne(m,button){
-    const old=button.textContent;
-    button.disabled=true;
-    button.textContent='Preparing…';
-    setStatus(`Preparing ${m.filename}…`);
-    try{
-      const source=await resolveSource(m.id);
-      triggerDirectDownload(source.url,m.filename);
-      setStatus(`${m.filename} ready.`,'ok');
-    }catch(error){
-      setStatus(`Unable to prepare ${m.filename}: ${friendlyError(error)}`,'error');
-    }finally{
-      button.disabled=false;
-      button.textContent=old;
-    }
+    const old=button.textContent;button.disabled=true;button.textContent='Preparing…';setStatus(`Preparing ${m.filename}…`);
+    try{const resolved=await resolveMedia(m.id);triggerDirectDownload(resolved.source.url,m.filename);setStatus(`${m.filename} ready.`,'ok');}
+    catch(error){setStatus(`Unable to prepare ${m.filename}: ${friendlyError(error)}`,'error');}
+    finally{button.disabled=false;button.textContent=old;}
   }
 
-  async function resolveSource(id){
+  async function resolveMedia(id){
+    if(cache.has(id))return cache.get(id);
     const json=await proxyJson(`https://api.gopro.com/media/${encodeURIComponent(id)}/download`);
     const embedded=json&&json._embedded?json._embedded:{};
     const variants=[]
@@ -187,87 +102,30 @@
       .concat(Array.isArray(embedded.files)?embedded.files:[])
       .concat(Array.isArray(embedded.sidecar_files)?embedded.sidecar_files:[])
       .filter(v=>v&&v.url);
-    const source=variants.find(v=>String(v.label||'').toLowerCase()==='source')
-      ||variants.find(v=>String(v.label||'').toLowerCase()==='baked_source')
-      ||variants.find(v=>String(v.label||'').toLowerCase()==='concat');
+    const source=variants.find(v=>String(v.label||'').toLowerCase()==='source')||variants.find(v=>String(v.label||'').toLowerCase()==='baked_source')||variants.find(v=>String(v.label||'').toLowerCase()==='concat');
     if(!source||!source.url)throw new Error('original source unavailable');
-    return source;
+    const nonSource=variants.filter(v=>v!==source&&v.url);
+    const preview=nonSource.sort((a,b)=>previewScore(a)-previewScore(b))[0]||source;
+    const result={source,preview};cache.set(id,result);return result;
+  }
+
+  function previewScore(v){
+    const pixels=Number(v.width||0)*Number(v.height||0);
+    const quality=String(v.quality||'').toLowerCase();
+    const label=String(v.label||'').toLowerCase();
+    let score=pixels>0?pixels:999999999;
+    if(/low|thumb|preview|mobile/.test(quality+' '+label))score-=500000000;
+    return score;
   }
 
   async function proxyJson(target){
     let json=null,lastError=null;
-    try{
-      const response=await fetch(`https://corsproxy.io/?url=${encodeURIComponent(target)}`,{method:'GET',cache:'no-store',headers:{Accept:API_ACCEPT}});
-      if(!response.ok)throw new Error(`proxy HTTP ${response.status}`);
-      json=await response.json();
-    }catch(error){lastError=error;}
-    if(!json){
-      try{
-        const response=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`,{cache:'no-store'});
-        if(!response.ok)throw new Error(`fallback HTTP ${response.status}`);
-        json=await response.json();
-      }catch(error){lastError=error;}
-    }
-    if(!json)throw new Error(lastError?lastError.message:'media service unavailable');
-    return json;
+    try{const response=await fetch(`https://corsproxy.io/?url=${encodeURIComponent(target)}`,{method:'GET',cache:'no-store',headers:{Accept:API_ACCEPT}});if(!response.ok)throw new Error(`proxy HTTP ${response.status}`);json=await response.json();}catch(error){lastError=error;}
+    if(!json){try{const response=await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`,{cache:'no-store'});if(!response.ok)throw new Error(`fallback HTTP ${response.status}`);json=await response.json();}catch(error){lastError=error;}}
+    if(!json)throw new Error(lastError?lastError.message:'media service unavailable');return json;
   }
 
-  function findPreviewNearMediaId(root,mediaId){
-    let found='';
-    const seen=new WeakSet();
-    function hasId(value){
-      if(typeof value==='string')return value===mediaId;
-      if(!value||typeof value!=='object')return false;
-      if(seen.has(value))return false;
-      seen.add(value);
-      return Object.values(value).some(hasId);
-    }
-    function findImage(value){
-      if(found)return;
-      if(typeof value==='string'){
-        const text=value.trim();
-        if(/^https:\/\/images-\d+\.gopro\.com\//i.test(text)||/^https:\/\/[^\s]+\.(?:jpg|jpeg|png|webp)(?:[?#].*)?$/i.test(text))found=text;
-        return;
-      }
-      if(!value||typeof value!=='object')return;
-      Object.values(value).some(v=>{findImage(v);return Boolean(found);});
-    }
-    function walk(value){
-      if(found||!value||typeof value!=='object')return;
-      const probeSeen=new WeakSet();
-      const originalSeen=seen;
-      seen.clear?.();
-      if(hasId(value)){findImage(value);if(found)return;}
-      Object.values(value).some(v=>{walk(v);return Boolean(found);});
-      void probeSeen; void originalSeen;
-    }
-    try{walk(root);}catch(_){return '';}
-    return found;
-  }
-
-  function findAnyPreviewUrl(root){
-    let found='';
-    const seen=new WeakSet();
-    function walk(value){
-      if(found)return;
-      if(typeof value==='string'){
-        const text=value.trim();
-        if(/^https:\/\/images-\d+\.gopro\.com\//i.test(text)||/^https:\/\/[^\s]+\.(?:jpg|jpeg|png|webp)(?:[?#].*)?$/i.test(text))found=text;
-        return;
-      }
-      if(!value||typeof value!=='object'||seen.has(value))return;
-      seen.add(value);
-      Object.values(value).some(v=>{walk(v);return Boolean(found);});
-    }
-    walk(root);
-    return found;
-  }
-
-  function triggerDirectDownload(url,filename){
-    const a=document.createElement('a');
-    a.href=url;a.target='_blank';a.rel='noopener';a.download=filename;
-    document.body.appendChild(a);a.click();a.remove();
-  }
+  function triggerDirectDownload(url,filename){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.download=filename;document.body.appendChild(a);a.click();a.remove();}
   function setStatus(message,cls=''){status.textContent=message;status.className=`status ${cls}`.trim();}
   function friendlyError(error){return String(error&&error.message||error||'unknown error');}
   function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms));}
