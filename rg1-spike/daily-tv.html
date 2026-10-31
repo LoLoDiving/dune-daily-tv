@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="transport.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, initial-scale=1" />
+<title>DAILY PACKAGES – TV</title>
+<style>
+html, body{height:100%;margin:0;overflow:hidden;}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:#f4f6f8;color:#111;}
+#root{width:100%;height:100%;}
+
+.desktop-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:10px 12px;
+  height:100%;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+
+.day-column{
+  background:#f4f6f8;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  position:relative;
+}
+
+.day-title{
+  margin:0;
+  padding:5px 10px 6px;
+  font-size:18px;
+  font-weight:950;
+  color:#0b4f6c;
+}
+
+.day-content{
+  padding:0 4px 6px;
+  overflow:hidden;
+  min-height:0;
+  flex:1 1 auto;
+}
+
+.total{
+  background:
+    radial-gradient(700px 220px at 0% 0%, rgba(11,79,108,.13), transparent 55%),
+    linear-gradient(180deg,#fff 0%,#f6f9fc 100%);
+  border:1px solid rgba(0,58,92,.12);
+  box-shadow:0 5px 12px rgba(0,0,0,.10);
+  border-radius:12px;
+}
+
+.total-mini{
+  margin:0 4px 10px;
+  padding:10px 14px;
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:16px;
+  align-items:center;
+}
+
+.total-left{
+  border-right:1px solid rgba(0,58,92,.18);
+  padding-right:14px;
+}
+
+.tot-title{
+  font-size:13px;
+  font-weight:950;
+  color:#003a5c;
+  margin-bottom:5px;
+}
+
+.tot-main{
+  display:block;
+  font-size:32px;
+  line-height:1;
+  font-weight:950;
+  color:#003a5c;
+}
+
+.total-right{display:grid;gap:7px;}
+
+.tot-line{
+  display:grid;
+  grid-template-columns:120px 90px 110px 110px 130px;
+  align-items:center;
+  gap:10px;
+  padding:0 0 7px;
+  border-bottom:1px solid rgba(0,58,92,.12);
+  font-size:14px;
+  font-weight:950;
+  color:#003a5c;
+}
+
+.tot-line:last-child{border-bottom:none;padding-bottom:0;}
+
+.tot-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  font-size:14px;
+  font-weight:950;
+  color:#003a5c;
+  white-space:nowrap;
+}
+
+.tot-badge.afternoon,.tot-line .afternoon{color:#1b4d3e;}
+
+.slot-header{
+  background:linear-gradient(90deg,#0b4f6c,#0a3f57);
+  color:#fff;
+  padding:6px 10px;
+  margin-top:5px;
+  display:flex;
+  flex-direction:column;
+  border-radius:10px 10px 0 0;
+}
+
+.slot-header-main{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14px;
+  font-weight:950;
+  line-height:1.1;
+}
+
+.slot-header-main > div:first-child{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.slot-header-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex:0 0 auto;
+}
+
+.slot-header-sub{display:none;}
+
+.slot-tanks{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(255,255,255,.12);
+  padding:1px 7px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:950;
+  white-space:nowrap;
+}
+
+.slot-content{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  margin-top:0;
+  border:1px solid rgba(0,58,92,.12);
+  border-top:none;
+  border-radius:0 0 10px 10px;
+  overflow:hidden;
+  background:#fff;
+}
+
+.pax{
+  background:#fff;
+  border-radius:0;
+  padding:4px 8px;
+  display:grid;
+  grid-template-columns:190px 1fr;
+  align-items:center;
+  min-height:30px;
+  border-bottom:1px solid rgba(0,58,92,.08);
+}
+
+.pax:last-child{border-bottom:none;}
+
+.pax-name{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:16px;
+  line-height:1.1;
+  font-weight:900;
+  color:#0b2f45;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.pax-diff-icon{font-size:12px;opacity:.45;line-height:1;}
+
+.pax-equip{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:8px;
+  overflow:hidden;
+  white-space:nowrap;
+  padding-bottom:0;
+  align-items:center;
+}
+
+.equip-row,.equip-row.special{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:7px;
+  border:none;
+  padding:0;
+  min-width:0;
+}
+
+.equip-pill{
+  background:transparent;
+  color:#003a5c;
+  padding:0;
+  font-size:15px;
+  font-weight:900;
+  white-space:nowrap;
+  line-height:1.1;
+}
+
+.empty-day{
+  height:100%;
+  min-height:520px;
+  border:1px solid rgba(0,58,92,.12);
+  border-radius:12px;
+  background:rgba(255,255,255,.35);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#0b4f6c;
+  font-weight:950;
+  text-align:center;
+}
+
+.empty-icon{font-size:42px;margin-bottom:18px;}
+.empty-title{font-size:24px;}
+.empty-sub{font-size:19px;font-style:italic;font-weight:700;margin-top:6px;}
+
+.skeleton{opacity:.4;}
+.skeleton .equip-pill{
+  background:linear-gradient(90deg,#e9f1f7 25%,#f4f8fb 37%,#e9f1f7 63%);
+  background-size:400% 100%;
+  animation:shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer{0%{background-position:100% 0;}100%{background-position:0 0;}}
+
+.header-signature{
+  position:absolute;
+  top:10px;
+  right:12px;
+  text-align:right;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.4px;
+  color:rgba(0,0,0,1);
+  opacity:.95;
+  z-index:40;
+  pointer-events:none;
+  user-select:none;
+  white-space:nowrap;
+}
+
+#loadingOverlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#f4f6f8,#eef2f5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.loader-box{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.spinner{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:4px solid rgba(11,79,108,.15);
+  border-top-color:#0b4f6c;
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loader-text{font-size:13px;font-weight:700;color:#0b4f6c;opacity:.8;}
+
+.fade-in{
+  opacity:0;
+  transform:translateY(6px);
+  animation:fadeInUp .35s ease forwards;
+}
+@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
+
+#app{
+  width:1920px;
+  height:1080px;
+  position:absolute;
+  top:0;
+  left:0;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loadingOverlay">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <div class="loader-text">Loading daily packages…</div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="header-signature">© Design & System — Laurent Sampéré - const scale = 0.50</div>
+  <div id="root"></div>
+</div>
+
+<script>
+
+const equipDiffMap = new Set();
+
+let currentDate = new Date();
+let isLoading = false;
+let refreshTimer = null;
+let reqSeq = 0;
+let lastGoodJ = null;
+let lastGoodJ1 = null;
+
+const SLOT_ORDER = ["MORNING", "AFTERNOON"];
+
+const SLOT_GROUPS = {
+  "MORNING": ["MORNING-1", "MORNING-2"],
+  "AFTERNOON": ["AFTERNOON"]
+};
+
+function showLoader(){
+  const el = document.getElementById("loadingOverlay");
+  if (el) el.style.display = "flex";
+}
+
+function hideLoader(){
+  const el = document.getElementById("loadingOverlay");
+  if (el) el.style.display = "none";
+}
+
+function toISO(d){
+  const x = new Date(d);
+  x.setHours(12,0,0,0);
+  return x.toISOString().slice(0,10);
+}
+
+function formatDate(d){
+  return d.toLocaleDateString("en-GB", {
+    weekday:"short",
+    day:"2-digit",
+    month:"short",
+    year:"numeric"
+  });
+}
+
+function fetchDaily(dateISO){
+  return DiveOpsTvBridge.request('daily', dateISO).catch(() => { hideLoader(); return null; });
+}
+
+function initTankCounts(){
+  return {"12L":0,"15L":0};
+}
+
+function getTankVolume(rawEquip){
+  const s = String(rawEquip || "");
+  if (s.includes("15L")) return "15L";
+  if (s.includes("12L")) return "12L";
+  return "";
+}
+
+function addTank(counts, rawEquip){
+  const vol = getTankVolume(rawEquip);
+  if (!vol) return;
+  counts[vol] = (counts[vol] || 0) + 1;
+}
+
+function getWeightKg(rawEquip){
+  if (!rawEquip) return 0;
+  const m = String(rawEquip).match(/⚖️\s*(\d+)\s*kg/i);
+  return m ? parseInt(m[1],10) : 0;
+}
+
+function renderEquipment(raw){
+  if (!raw) return "";
+
+  const segments = raw.split("|").map(s => s.trim()).filter(Boolean);
+  const lineCore = [];
+  const lineOther = [];
+  const lineKayak = [];
+
+  segments.forEach(seg => {
+    const low = seg.toLowerCase();
+
+    if (low.includes("🛶")) {
+      lineKayak.push(seg);
+      return;
+    }
+
+    if (
+      low.includes("mask") ||
+      low.includes("regulator") ||
+      low.includes("computer") ||
+      low.includes("lamp") ||
+      low.includes("compass") ||
+      low.includes("dpv")
+    ){
+      lineOther.push(seg);
+      return;
+    }
+
+    lineCore.push(seg);
+  });
+
+  let html = "";
+
+  if (lineCore.length) {
+    html += `<div class="equip-row">${lineCore.map(e => `<span class="equip-pill">${e}</span>`).join("")}</div>`;
+  }
+
+  if (lineOther.length) {
+    html += `<div class="equip-row special">${lineOther.map(e => `<span class="equip-pill">${e}</span>`).join("")}</div>`;
+  }
+
+  if (lineKayak.length) {
+    html += `<div class="equip-row special">${lineKayak.map(e => `<span class="equip-pill">${e}</span>`).join("")}</div>`;
+  }
+
+  return html;
+}
+
+function render(data){
+  const uniquePax = new Set();
+
+  const tanksByDisplaySlot = {
+    "MORNING": initTankCounts(),
+    "AFTERNOON": initTankCounts()
+  };
+
+  const guideBlocksByDisplaySlot = {
+    "MORNING": new Set(),
+    "AFTERNOON": new Set()
+  };
+
+  const morningPaxKg = new Map();
+  let afternoonKg = 0;
+
+  SLOT_ORDER.forEach(displaySlot => {
+    const realSlots = SLOT_GROUPS[displaySlot] || [displaySlot];
+
+    realSlots.forEach(realSlot => {
+      const acts = data.slots?.[realSlot];
+      if (!acts) return;
+
+      acts.forEach(act => {
+        (act.sites || []).forEach(siteObj => {
+          (siteObj.guides || []).forEach(g => {
+            const guideName = String(g.guide || g.name || g.guideName || "").trim();
+
+            if (guideName) {
+              guideBlocksByDisplaySlot[displaySlot].add(`${realSlot}|${guideName}`);
+            }
+
+            (g.pax || []).forEach(p => {
+              if (p.paxKey) uniquePax.add(p.paxKey);
+
+              addTank(tanksByDisplaySlot[displaySlot], p.equipment);
+
+              const kg = getWeightKg(p.equipment);
+
+              if (displaySlot === "MORNING") {
+                if (p.paxKey && kg > 0 && !morningPaxKg.has(p.paxKey)) {
+                  morningPaxKg.set(p.paxKey, kg);
+                }
+              }
+
+              if (displaySlot === "AFTERNOON" && kg > 0) {
+                afternoonKg += kg;
+              }
+            });
+          });
+        });
+      });
+    });
+  });
+
+  const tanksMorning = tanksByDisplaySlot["MORNING"];
+  const tanksAfternoon = tanksByDisplaySlot["AFTERNOON"];
+  const morningKg = [...morningPaxKg.values()].reduce((a,b)=>a+b,0);
+
+  let html = "";
+
+  SLOT_ORDER.forEach(displaySlot => {
+    const realSlots = SLOT_GROUPS[displaySlot] || [displaySlot];
+    let hasData = false;
+    const paxMap = new Map();
+
+    realSlots.forEach(realSlot => {
+      const acts = data.slots?.[realSlot];
+      if (!acts) return;
+
+      hasData = true;
+
+      acts.forEach(act => {
+        (act.sites || []).forEach(siteObj => {
+          (siteObj.guides || []).forEach(g => {
+            (g.pax || []).forEach(p => {
+              if (data.isJ && p.isLinked) return;
+
+              const key = p.paxKey || `${p.firstName || ""}|${p.lastName || ""}`;
+
+              if (!paxMap.has(key)) {
+                paxMap.set(key, p);
+              }
+            });
+          });
+        });
+      });
+    });
+
+    if (!hasData || paxMap.size === 0) return;
+
+    const paxList = [...paxMap.values()].sort((a,b) => {
+      const clean = v => String(v || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim()
+        .toLowerCase();
+
+      const firstA = clean(a.firstName);
+      const firstB = clean(b.firstName);
+      const lastA = clean(a.lastName);
+      const lastB = clean(b.lastName);
+
+      const sortA = firstA ? `${firstA} ${lastA}` : lastA;
+      const sortB = firstB ? `${firstB} ${lastB}` : lastB;
+
+      return sortA.localeCompare(sortB, "en", { sensitivity:"base" });
+    });
+
+    const c = tanksByDisplaySlot[displaySlot];
+    const slotSummary = `🫧 ${c["12L"]}×12L • ${c["15L"]}×15L`;
+
+    let vehicleHTML = "";
+
+    realSlots.forEach(realSlot => {
+      const transport = data.transport?.[realSlot];
+
+      if (transport?.vehicles) {
+        vehicleHTML += Object.values(transport.vehicles).map(v => {
+          let color = "#e8f1f7";
+          if (v.used > v.max) color = "#ff4d4d";
+          else if (v.used === v.max) color = "#ffb703";
+
+          const icon = v.type === "BOAT" ? "🚤" : "🚐";
+          return `<span style="color:${color};font-weight:900;">${icon} ${v.used}/${v.max} ${v.label}</span>`;
+        }).join(" ");
+      }
+    });
+
+    html += `
+      <div class="slot-header">
+        <div class="slot-header-main">
+          <div>
+            <strong>▼ ${displaySlot}</strong>
+            ${vehicleHTML ? `<span style="margin-left:10px;">${vehicleHTML}</span>` : ""}
+          </div>
+          <div class="slot-header-right">
+            <span style="font-weight:900;">${paxList.length} pax</span>
+            <span class="slot-tanks">${slotSummary}</span>
+          </div>
+        </div>
+      </div>
+      <div class="slot-content" id="slot_${displaySlot}">
+    `;
+
+    paxList.forEach(p => {
+      html += renderNormalPax(p);
+    });
+
+    html += `</div>`;
+  });
+
+  const contentEl = document.getElementById("content");
+  if (contentEl) contentEl.innerHTML = html;
+
+  const totalEl = document.getElementById("totalLabel");
+  if (totalEl) {
+    totalEl.innerHTML = `
+      <div class="total-left">
+        <div class="tot-title">TOTAL / DAY</div>
+        <div class="tot-main">${uniquePax.size} Pax</div>
+      </div>
+
+      <div class="total-right">
+        <div class="tot-line">
+          <div>MORNING</div>
+          <span class="tot-badge">⚖️ ${morningKg} kg</span>
+          <span class="tot-badge">🫧 ${tanksMorning["12L"]}×12L</span>
+          <span class="tot-badge">🫧 ${tanksMorning["15L"]}×15L</span>
+          <span class="tot-badge">🧩 ${guideBlocksByDisplaySlot["MORNING"].size}×12L guide</span>
+        </div>
+
+        <div class="tot-line">
+          <div class="afternoon">AFTERNOON</div>
+          <span class="tot-badge afternoon">⚖️ ${afternoonKg} kg</span>
+          <span class="tot-badge afternoon">🫧 ${tanksAfternoon["12L"]}×12L</span>
+          <span class="tot-badge afternoon">🫧 ${tanksAfternoon["15L"]}×15L</span>
+          <span class="tot-badge afternoon">🧩 ${guideBlocksByDisplaySlot["AFTERNOON"].size}×12L guide</span>
+        </div>
+      </div>
+    `;
+  }
+
+  setTimeout(() => {
+    document.querySelectorAll(".pax-equip.skeleton").forEach(el => {
+      const raw = decodeURIComponent(el.dataset.equip || "");
+      el.innerHTML = renderEquipment(raw);
+      el.classList.remove("skeleton");
+    });
+  }, 40);
+}
+
+function hasAnyPax(data){
+  let count = 0;
+
+  Object.values(SLOT_GROUPS).flat().forEach(slot => {
+    (data.slots?.[slot] || []).forEach(act => {
+      (act.sites || []).forEach(siteObj => {
+        (siteObj.guides || []).forEach(g => {
+          count += (g.pax || []).length;
+        });
+      });
+    });
+  });
+
+  return count > 0;
+}
+
+function renderEmptyDay(contentId){
+  const el = document.getElementById(contentId);
+  if (!el) return;
+
+  el.innerHTML = `
+    <div class="empty-day">
+      <div class="empty-icon">🗓️</div>
+      <div class="empty-title">NO ACTIVITIES PLANNED</div>
+      <div class="empty-sub">Enjoy the day!</div>
+    </div>
+  `;
+}
+
+function scheduleAutoRefresh(){
+  if (refreshTimer) {
+    clearTimeout(refreshTimer);
+    refreshTimer = null;
+  }
+
+  refreshTimer = setTimeout(() => {
+    loadDesktopDay(true);
+    scheduleAutoRefresh();
+  }, 60000);
+}
+
+async function loadDesktopDay(isAuto = false){
+  if (isLoading) return;
+  isLoading = true;
+
+  if (!isAuto) showLoader();
+
+  const base = new Date(currentDate);
+  const d0 = toISO(base);
+
+  const d1Date = new Date(base);
+  d1Date.setDate(base.getDate() + 1);
+  const d1 = toISO(d1Date);
+
+  const mySeq = ++reqSeq;
+
+  const [dataJ, dataJ1] = await Promise.all([
+    fetchDaily(d0),
+    fetchDaily(d1)
+  ]);
+
+  if (mySeq !== reqSeq) return;
+
+  if (!dataJ || !dataJ1) {
+    console.warn("TV load incomplete", dataJ, dataJ1);
+
+    if (lastGoodJ && lastGoodJ1) {
+      renderDesktop(lastGoodJ, lastGoodJ1);
+      hideLoader();
+    }
+
+    isLoading = false;
+    return;
+  }
+
+  lastGoodJ = dataJ;
+  lastGoodJ1 = dataJ1;
+
+  renderDesktop(dataJ, dataJ1);
+  isLoading = false;
+
+  if (!isAuto) hideLoader();
+
+  scheduleAutoRefresh();
+}
+
+function renderDesktop(dataJ, dataJ1){
+  const root = document.getElementById("root");
+
+  root.innerHTML = `
+    <div class="desktop-grid fade-in">
+      <div class="day-column">
+        <h2 class="day-title">${formatDate(new Date(dataJ.date))}</h2>
+        <div class="total total-mini" id="totalJ"></div>
+        <div class="day-content" id="content"></div>
+      </div>
+
+      <div class="day-column">
+        <h2 class="day-title">${formatDate(new Date(dataJ1.date))}</h2>
+        <div class="total total-mini" id="totalJ1"></div>
+        <div class="day-content" id="contentJ1"></div>
+      </div>
+    </div>
+  `;
+
+  const paxMapJ = new Map();
+  const paxMapJ1 = new Map();
+
+  collectPax(dataJ, paxMapJ);
+  collectPax(dataJ1, paxMapJ1);
+
+  const linkedKeys = new Set([...paxMapJ.keys()].filter(k => paxMapJ1.has(k)));
+
+  equipDiffMap.clear();
+
+  linkedKeys.forEach(k => {
+    const pJ = paxMapJ.get(k);
+    const pJ1 = paxMapJ1.get(k);
+
+    if (pJ && pJ1 && hasEquipDiff(pJ, pJ1)) {
+      equipDiffMap.add(k);
+    }
+  });
+
+  markLinkedPax(dataJ, linkedKeys);
+  markLinkedPax(dataJ1, linkedKeys);
+
+  dataJ.isJ = true;
+  dataJ1.isJ = false;
+
+  renderInto("content", "totalJ", dataJ);
+  renderInto("contentJ1", "totalJ1", dataJ1);
+
+  if (!hasAnyPax(dataJ)) renderEmptyDay("content");
+  if (!hasAnyPax(dataJ1)) renderEmptyDay("contentJ1");
+}
+
+function collectPax(data, map){
+  Object.keys(SLOT_GROUPS).forEach(displaySlot => {
+    const realSlots = SLOT_GROUPS[displaySlot] || [displaySlot];
+
+    realSlots.forEach(realSlot => {
+      (data.slots?.[realSlot] || []).forEach(act => {
+        (act.sites || []).forEach(siteObj => {
+          (siteObj.guides || []).forEach(g => {
+            (g.pax || []).forEach(p => {
+              if (p.paxKey) map.set(p.paxKey, p);
+            });
+          });
+        });
+      });
+    });
+  });
+}
+
+function markLinkedPax(data, linkedKeys){
+  Object.keys(SLOT_GROUPS).forEach(displaySlot => {
+    const realSlots = SLOT_GROUPS[displaySlot] || [displaySlot];
+
+    realSlots.forEach(realSlot => {
+      (data.slots?.[realSlot] || []).forEach(act => {
+        (act.sites || []).forEach(siteObj => {
+          (siteObj.guides || []).forEach(g => {
+            (g.pax || []).forEach(p => {
+              p.isLinked = linkedKeys.has(p.paxKey);
+            });
+          });
+        });
+      });
+    });
+  });
+}
+
+function renderInto(contentId, totalId, data){
+  const targetContent = document.getElementById(contentId);
+  const targetTotal = document.getElementById(totalId);
+  if (!targetContent || !targetTotal) return;
+
+  const originalGet = document.getElementById;
+
+  document.getElementById = function(id){
+    if (id === "content") return targetContent;
+    if (id === "totalLabel") return targetTotal;
+    return originalGet.call(document, id);
+  };
+
+  render(data);
+
+  document.getElementById = originalGet;
+}
+
+function renderNormalPax(p){
+  const showDiff = equipDiffMap.has(p.paxKey) && !p.isJ;
+
+  const diffIcon = showDiff
+    ? `<span class="pax-diff-icon" title="Equipment changed">🔁</span>`
+    : "";
+
+  return `
+    <div class="pax pax-box">
+      <div class="pax-name">
+        ${p.firstName || ""} ${p.lastName || ""}
+        ${diffIcon}
+      </div>
+
+      <div class="pax-equip skeleton"
+           data-equip="${encodeURIComponent(p.equipment || "")}">
+        <span class="equip-pill">&nbsp;</span>
+      </div>
+    </div>
+  `;
+}
+
+function normalizeEquip(raw){
+  return String(raw || "")
+    .toLowerCase()
+    .replace(/\s+/g,"")
+    .replace(/[|]/g,"");
+}
+
+function hasEquipDiff(pJ,pJ1){
+  return normalizeEquip(pJ.equipment) !== normalizeEquip(pJ1.equipment);
+}
+
+function scaleTV(){
+  const app = document.getElementById("app");
+  if (!app) return;
+
+  const scale = 0.50;
+
+  app.style.transform = `scale(${scale})`;
+  app.style.transformOrigin = "top left";
+
+  const offsetX = 0;
+  const offsetY = 8;
+
+  app.style.left = offsetX + "px";
+  app.style.top = offsetY + "px";
+}
+
+window.addEventListener("load", () => {
+  scaleTV();
+  window.addEventListener("resize", scaleTV);
+});
+
+loadDesktopDay();
+
+// Bridge-only recovery preserves the current screen.
+</script>
+
+</body>
+</html>
